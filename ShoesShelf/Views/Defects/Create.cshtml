@@ -1,0 +1,45 @@
+﻿@model ShoesShelf.Models.Defect
+
+@{
+    ViewData["Title"] = "Create Defect";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ShoeID" class="control-label"></label>
+                <select asp-for="ShoeID" class="form-control" asp-items="ViewBag.ShoeID">
+                    <option value="">-- Select Shoes --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Severity" class="control-label"></label>
+                <select asp-for="Severity" class="form-control" asp-items="Html.GetEnumSelectList<Severity>()">
+                    <option value="">-- Select Severity --</option>
+                </select>
+                <span asp-validation-for="Severity" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <select asp-for="Description" class="form-control" asp-items="ViewBag.Descriptions">
+                    <option value="">-- Select Description --</option>
+                </select>
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
