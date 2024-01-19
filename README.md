@@ -1,4 +1,4 @@
-# ShoesShelf V45
+# ShoesShelf s použitím LINQ dotazování (viz HomeController)
 
 Původní zadání od zaměstnavatele:
 
@@ -29,7 +29,7 @@ S dotazy se obracejte na mne
 
 Mějte pěkný den
 
-# ShoesShelf – verze s Reporty s použitím LINQ dotazování (HomeController)
+# ShoesShelf – verze s Reporty s použitím LINQ dotazování (viz HomeController)
 Analytický návrh řešení fiktivní úlohy: relační databázový model pro správu botníku v bowlingové herně. Aplikace má několik tabulek s cizími i vlastními klíči, je naplněna daty. Na záložce SHOES je předvedeno filtrování dat. Záložky mají řazení a stránkování. Aplikace je navržena v angličtině. Analytické schopnosti programu jsou na záložce Reports:
 
 • Rental Report: aplikace udává množství vypůjčení bot stejného typu a velikosti, řazeno podle oblíbenosti, tedy od největšího počtu vypůjčení a pak podle ceny;
