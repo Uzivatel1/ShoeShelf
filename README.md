@@ -2,10 +2,6 @@
 
 Původní zadání od zaměstnavatele:
 
-Na pobočce vás bude očekávat vedoucí týmu realizace 
-
-Zadání úkolu pro setkání
-
 Předvést analytický návrh řešení fiktivní úlohy:
 
 Navrhněte relační databázový model pro aplikaci pro správu velkého botníku v bowlingové herně
