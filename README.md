@@ -30,6 +30,7 @@ S dotazy se obracejte na mne
 Mějte pěkný den
 
 # ShoesShelf – verze s Reporty s použitím LINQ dotazování (viz HomeController)
+
 Analytický návrh řešení fiktivní úlohy: relační databázový model pro správu botníku v bowlingové herně. Aplikace má několik tabulek s cizími i vlastními klíči, je naplněna daty. Na záložce SHOES je předvedeno filtrování dat. Záložky mají řazení a stránkování. Aplikace je navržena v angličtině. Analytické schopnosti programu jsou na záložce Reports:
 
 • Rental Report: aplikace udává množství vypůjčení bot stejného typu a velikosti, řazeno podle oblíbenosti, tedy od největšího počtu vypůjčení a pak podle ceny;
@@ -39,4 +40,5 @@ Analytický návrh řešení fiktivní úlohy: relační databázový model pro 
 • Substitution Report: aplikace navrhuje nákup bot s kritickou mírou poškození. V případě, že jsou v botníku 3 páry např. pánských bot stejné značky a velikosti s kritickým poškozením, navrhne aplikace k zakoupení 3 takové páry.
 
 Detail jednotlivého páru bot vypíše veškeré jeho vlastnosti včetně typu, velikosti, data zařazení do botníku, pořizovací ceny, celkového počtu vypůjčení pro daný pár, termínu poslední dezinfekce, druhů a závažnosti poškození, a zda je daný pár bot aktuálně zapůjčený.
+
 HTML úprava je navržena s použitím knihoven Bootstrap a je interaktivní.
