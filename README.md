@@ -1,6 +1,6 @@
 # ShoesShelf
 
-Původní zadání od zaměstnavatele:
+Zadání od zaměstnavatele:
 
 Předvést analytický návrh řešení fiktivní úlohy:
 
@@ -20,10 +20,6 @@ Evidence typů bot i konkrétních párů bot určitého typu, jejich velikostí
 Tip
 
 Návrh můžete předvést v SQL Management studiu i jako skutečnou databázi vytvořenou na Microsoft SQL serveru (Express edice je k dispozici zdarma a lze ji instalovat na běžný notebook). Databázi můžete pro názornost ručně naplnit ukázkovými daty.
-
-S dotazy se obracejte na mne
-
-Mějte pěkný den
 
 # ShoesShelf - projekt dle zadání
 
