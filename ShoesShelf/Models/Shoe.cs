@@ -35,8 +35,8 @@ namespace ShoesShelf.Models
         };
 
         [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:# ### ### Kč}")]
-        public double Price { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N0} Kč", ApplyFormatInEditMode = true)]
+        public decimal Price { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
@@ -50,14 +50,5 @@ namespace ShoesShelf.Models
         public ICollection<Disinfection> Disinfections { get; set; }
 
         public bool Rented { get; set; }
-
-        [Display(Name = "Full Definition")]
-        public string FullDefinition
-        {
-            get
-            {
-                return ID + " " + Brand + " " + Category + " " + Size;
-            }
-        }
     }
 }

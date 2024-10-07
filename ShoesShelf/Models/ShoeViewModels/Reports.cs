@@ -13,8 +13,8 @@ namespace ShoesShelf.Models.ShoeViewModels
         public double Size { get; set; }
 
         [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:# ### ### Kč}")]
-        public double Price { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N0} Kč", ApplyFormatInEditMode = true)]
+        public decimal Price { get; set; }
 
         public int Count { get; set; }
 
