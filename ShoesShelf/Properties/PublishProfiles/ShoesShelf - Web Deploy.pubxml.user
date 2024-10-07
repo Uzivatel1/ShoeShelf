@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA53iNOpWjzEuRcFQN8SFkJwAAAAACAAAAAAAQZgAAAAEAACAAAABa1Ef3NpB3VgKIDt0OD3PqAFy9cVHCpdwZfr1BUNdgogAAAAAOgAAAAAIAACAAAABPZYenpzAM2NwBgnI3aDXqepW6Ey3ZYMDP90a38n9SZ4AAAADE9la6CW6dGy8CNYlyFtUnZX6rNzRVpn3tiqcuQ/faYmFSU7R/uIga9RTdviBr/omxcG6jA1GBbl/JXudbrVQoHvKGTVK0dxZpCT+oQ/C2Rx7XvXk1jZCvw1rUpaS7IJ2PwX7AekUYV2lradIMfLhqRjiY9c1/LaB+ndMHKNeltEAAAADu37/MXCdqTObDV6eELhV/EtXPadF7XFDwD6iczw/SIOkBlui/QeqiEhfZu2SRs4t2k5ikfObq175RIjsqFeWU</EncryptedPassword>
+    <History>True|2024-01-13T15:46:35.2397911Z;True|2024-01-13T13:02:23.7840475+01:00;True|2024-01-13T12:41:23.3566189+01:00;True|2024-01-12T23:33:30.0054426+01:00;False|2024-01-12T23:32:05.3325970+01:00;True|2024-01-11T01:47:49.6850316+01:00;True|2024-01-11T01:42:20.3797045+01:00;True|2024-01-11T01:34:38.0851391+01:00;True|2024-01-10T23:36:09.7231557+01:00;True|2024-01-10T23:31:32.3174133+01:00;True|2024-01-10T23:26:01.0472059+01:00;True|2024-01-10T13:00:58.3704100+01:00;True|2024-01-09T22:34:46.4450987+01:00;False|2024-01-09T22:32:39.9941813+01:00;False|2024-01-09T22:32:08.6427987+01:00;True|2024-01-08T18:07:36.8179854+01:00;True|2024-01-07T13:32:05.5479766+01:00;True|2023-12-30T23:39:42.5242598+01:00;True|2023-12-30T23:27:32.2868054+01:00;True|2023-12-30T13:21:47.1132588+01:00;True|2023-12-27T00:40:56.1023564+01:00;True|2023-12-27T00:08:38.1034971+01:00;True|2023-12-25T20:40:58.8959083+01:00;True|2023-12-25T20:36:22.7853173+01:00;False|2023-12-25T20:32:22.0711881+01:00;False|2023-12-25T20:30:22.3367168+01:00;True|2023-12-22T00:46:29.1048180+01:00;True|2023-12-21T19:37:55.1903520+01:00;True|2023-12-21T00:37:28.2950601+01:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=shoesshelfdbserver.database.windows.net,1433%3bInitial Catalog=ShoesShelf_db%3bUser ID=zuls%3bPassword=obosr652-ALSA</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="ShoesShelf.Data.ApplicationDbContext">
+      <Value>Data Source=shoesshelfdbserver.database.windows.net,1433%3bInitial Catalog=ShoesShelf_db%3bUser ID=zuls%3bPassword=obosr652-ALSA</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

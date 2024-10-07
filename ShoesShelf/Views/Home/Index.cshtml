@@ -1,0 +1,90 @@
+﻿<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/carousel.css" asp-append-version="true" />
+</head>
+
+<body>
+    @*
+    <video id="myVideo" class="img-fluid" autoplay loop muted>
+        <source src="~/images/The Big Lebowski _ Bowling With The Jesus (1).mp4" />
+    </video>*@
+    <main>
+        <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" data-bs-theme="dark">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="20000">
+                    <div class="container">
+                        <div class="carousel-caption" style="color: #292d73">
+                            <h3>
+                                Dear visitor, let me introduce you my relational database model for managing a shoe rack in a
+                                bowling alley.
+                            </h3>
+                            <p>
+                                The application has several tables with foreign keys, it is filled with data. Data sorting, searching and
+                                filtering are demonstrated on the Shoes page. Each page has its pagination.
+                            </p>
+                            <p><a class="create-new" href="../Shoes">Let's see!</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="40000">
+                    <div class="container">
+                        <div class="carousel-caption" style="color: #292d73">
+                            <h3>Analytical capabilities of the application are demonstrated on the Reports tab with sorting:</h3>
+                            <p>
+                                Rental Report: the application calculates the number of shoe rentals of the same
+                                type and size, sorted by popularity, i.e. from the largest number of rentals and then
+                                by price;
+                            </p>
+                            <p>
+                                Disinfection Report: the application lists each pair of shoes with the date of its last
+                                disinfection only. In the case of adding a new pair of shoes without disinfection, the
+                                record "Not yet disinfected" will appear in the Report for this pair;
+                            </p>
+                            <p>
+                                Substitution Report: the application suggests buying shoes with a critical level of
+                                damage. If there are 3 pairs of, for example, men's shoes of the same brand and size
+                                with critical level of damage, the application will suggest buying 3 such pairs.
+                            </p>
+                            <p><a class="create-new" href="../Home/RentalReport">Let's see!</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="20000">
+                    <div class="container">
+                        <div class="carousel-caption" style="color: #292d73">
+                            <p>
+                                The detail page of each pair of shoes lists all its characteristics, including type, size, date
+                                of inclusion to the shoe rack, purchase price, total number of rentals for the given pair,
+                                date of its last disinfection, types and severity of damage and whether the given pair of
+                                shoes is currently rented or not.
+                            </p>
+                            <p>
+                                HTML editing is designed using Bootstrap libraries and is interactive. Of course, the data
+                                in the application can be changed at will.
+                            </p>
+                            <p><a class="create-new" href="../Shoes/Details/13">Let's see!</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </main>
+</body>
+</html>
