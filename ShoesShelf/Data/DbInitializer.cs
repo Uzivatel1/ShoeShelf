@@ -18,7 +18,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Male,
                 Size = 40,
-                Price = 1990,
+                Price = 1990M,
                 InclusionDate = DateTime.Parse("11.02.2023"),
                 Rented = false
             };
@@ -28,7 +28,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Male,
                 Size = 41,
-                Price = 1990,
+                Price = 1990M,
                 InclusionDate = DateTime.Parse("05.09.2023"),
                 Rented = true
             };
@@ -38,7 +38,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Male,
                 Size = 42,
-                Price = 1990,
+                Price = 1990M,
                 InclusionDate = DateTime.Parse("23.03.2023"),
                 Rented = false
             };
@@ -48,7 +48,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Male,
                 Size = 43,
-                Price = 1990,
+                Price = 1990M,
                 InclusionDate = DateTime.Parse("16.09.2023"),
                 Rented = false
             };
@@ -58,7 +58,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Male,
                 Size = 44,
-                Price = 1990,
+                Price = 1990M,
                 InclusionDate = DateTime.Parse("14.07.2023"),
                 Rented = false
             };
@@ -68,7 +68,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Male,
                 Size = 45,
-                Price = 1990,
+                Price = 1990M,
                 InclusionDate = DateTime.Parse("02.02.2023"),
                 Rented = true
             };
@@ -78,7 +78,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Female,
                 Size = 37,
-                Price = 2690,
+                Price = 2690M,
                 InclusionDate = DateTime.Parse("24.06.2023"),
                 Rented = true
             };
@@ -88,7 +88,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Female,
                 Size = 38,
-                Price = 2690,
+                Price = 2690M,
                 InclusionDate = DateTime.Parse("18.07.2023"),
                 Rented = false
             };
@@ -98,7 +98,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Female,
                 Size = 39,
-                Price = 2690,
+                Price = 2690M,
                 InclusionDate = DateTime.Parse("18.09.2023"),
                 Rented = true
             };
@@ -108,7 +108,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Female,
                 Size = 40,
-                Price = 2690,
+                Price = 2690M,
                 InclusionDate = DateTime.Parse("29.09.2023"),
                 Rented = false
             };
@@ -118,7 +118,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Female,
                 Size = 41,
-                Price = 2690,
+                Price = 2690M,
                 InclusionDate = DateTime.Parse("30.01.2023"),
                 Rented = false
             };
@@ -128,7 +128,7 @@ namespace ShoesShelf.Data
                 Brand = "BRUNSWICK",
                 Category = Category.Female,
                 Size = 42,
-                Price = 2690,
+                Price = 2690M,
                 InclusionDate = DateTime.Parse("18.10.2023"),
                 Rented = true
             };
@@ -138,7 +138,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 40,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("05.08.2023"),
                 Rented = false
             };
@@ -148,7 +148,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 41,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("24.08.2023"),
                 Rented = true
             };
@@ -158,7 +158,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 42,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("13.05.2023"),
                 Rented = true
             };
@@ -168,7 +168,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 43,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("11.03.2023"),
                 Rented = true
             };
@@ -178,7 +178,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 43,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("11.03.2023"),
                 Rented = false
             };
@@ -188,7 +188,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 43,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("11.03.2023"),
                 Rented = true
             };
@@ -198,7 +198,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 44,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("17.10.2023"),
                 Rented = false
             };
@@ -208,7 +208,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Male,
                 Size = 45,
-                Price = 1790,
+                Price = 1790M,
                 InclusionDate = DateTime.Parse("15.06.2023"),
                 Rented = true
             };
@@ -218,7 +218,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Female,
                 Size = 37,
-                Price = 1690,
+                Price = 1690M,
                 InclusionDate = DateTime.Parse("14.09.2023"),
                 Rented = true
             };
@@ -228,7 +228,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Female,
                 Size = 38,
-                Price = 1690,
+                Price = 1690M,
                 InclusionDate = DateTime.Parse("01.04.2023"),
                 Rented = false
             };
@@ -238,7 +238,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Female,
                 Size = 39,
-                Price = 1690,
+                Price = 1690M,
                 InclusionDate = DateTime.Parse("08.07.2023"),
                 Rented = false
             };
@@ -248,7 +248,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Female,
                 Size = 40,
-                Price = 1690,
+                Price = 1690M,
                 InclusionDate = DateTime.Parse("09.11.2023"),
                 Rented = true
             };
@@ -258,7 +258,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Female,
                 Size = 41,
-                Price = 1690,
+                Price = 1690M,
                 InclusionDate = DateTime.Parse("29.07.2023"),
                 Rented = true
             };
@@ -268,7 +268,7 @@ namespace ShoesShelf.Data
                 Brand = "900 GLOBAL",
                 Category = Category.Female,
                 Size = 42,
-                Price = 1690,
+                Price = 1690M,
                 InclusionDate = DateTime.Parse("25.09.2023"),
                 Rented = false
             };
@@ -278,7 +278,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 40,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("17.10.2023"),
                 Rented = false
             };
@@ -288,7 +288,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 41,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("06.03.2023"),
                 Rented = false
             };
@@ -298,7 +298,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 42,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("16.04.2023"),
                 Rented = true
             };
@@ -308,7 +308,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 42,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("16.04.2023"),
                 Rented = false
             };
@@ -318,7 +318,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 43,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("03.11.2023"),
                 Rented = false
             };
@@ -328,7 +328,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 44,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("20.01.2023"),
                 Rented = true
             };
@@ -338,7 +338,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 45,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("12.10.2023"),
                 Rented = true
             };
@@ -348,7 +348,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Male,
                 Size = 45,
-                Price = 2290,
+                Price = 2290M,
                 InclusionDate = DateTime.Parse("25.01.2023"),
                 Rented = false
             };
@@ -358,7 +358,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Female,
                 Size = 37,
-                Price = 1590,
+                Price = 1590M,
                 InclusionDate = DateTime.Parse("17.04.2023"),
                 Rented = false
             };
@@ -368,7 +368,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Female,
                 Size = 38,
-                Price = 1590,
+                Price = 1590M,
                 InclusionDate = DateTime.Parse("04.03.2023"),
                 Rented = false
             };
@@ -378,7 +378,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Female,
                 Size = 39,
-                Price = 1590,
+                Price = 1590M,
                 InclusionDate = DateTime.Parse("15.08.2023"),
                 Rented = true
             };
@@ -388,7 +388,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Female,
                 Size = 40,
-                Price = 1590,
+                Price = 1590M,
                 InclusionDate = DateTime.Parse("13.07.2023"),
                 Rented = false
             };
@@ -398,7 +398,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Female,
                 Size = 41,
-                Price = 1590,
+                Price = 1590M,
                 InclusionDate = DateTime.Parse("16.11.2023"),
                 Rented = true
             };
@@ -408,7 +408,7 @@ namespace ShoesShelf.Data
                 Brand = "DEXTER",
                 Category = Category.Female,
                 Size = 42,
-                Price = 1590,
+                Price = 1590M,
                 InclusionDate = DateTime.Parse("02.03.2023"),
                 Rented = false
             };
