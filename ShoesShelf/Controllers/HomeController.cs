@@ -55,10 +55,10 @@ namespace ShoesShelf.Controllers
                                         where d2.ShoeID == s.ID
                                         orderby d2.DisinfectionDate descending
                                         select d2.DisinfectionDate).FirstOrDefault()
-                }).Distinct().OrderBy(x => x.DisinfectionDate);
+                }).AsNoTracking().Distinct().OrderBy(x => x.DisinfectionDate);
 
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["DisinfectionDateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "disinfectionDate_desc" : "";
+            ViewData["DisinfectionDateSortParm"] = string.IsNullOrEmpty(sortOrder) ? "disinfectionDate_desc" : "";
             ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
             ViewData["IDSortParm"] = sortOrder == "ID" ? "id_desc" : "ID";
             ViewData["InclusionDateSortParm"] = sortOrder == "InclusionDate" ? "inclusionDate_desc" : "InclusionDate";
@@ -115,7 +115,7 @@ namespace ShoesShelf.Controllers
                 };
 
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["CountSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Count" : "";
+            ViewData["CountSortParm"] = string.IsNullOrEmpty(sortOrder) ? "Count" : "";
             ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
             switch (sortOrder)
@@ -163,7 +163,7 @@ namespace ShoesShelf.Controllers
                 };
 
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["BrandSortParm"] = String.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
+            ViewData["BrandSortParm"] = string.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
             ViewData["SizeSortParm"] = sortOrder == "Size" ? "size_desc" : "Size";
             ViewData["CategorySortParm"] = sortOrder == "Category" ? "category_desc" : "Category";
             ViewData["CountSortParm"] = sortOrder == "Count" ? "count_desc" : "Count";
