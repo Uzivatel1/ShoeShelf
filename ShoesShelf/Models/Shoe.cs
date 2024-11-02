@@ -58,5 +58,14 @@ namespace ShoesShelf.Models
         public ICollection<Disinfection> Disinfections { get; set; }
 
         public bool Rented { get; set; }
+
+        [Display(Name = "Full Definition")]
+        public string FullDefinition
+        {
+            get
+            {
+                return ID + " " + Brand + " " + Category + " " + Size;
+            }
+        }
     }
 }

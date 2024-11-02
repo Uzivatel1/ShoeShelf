@@ -22,83 +22,90 @@ using System.Composition;
 
 namespace ShoesShelf.Controllers
 {
+    /// <summary>
+    /// HomeController provides various reports and general pages for the application.
+    /// This includes Disinfection, Rental, and Substitution reports, as well as the 
+    /// home index, privacy, and error handling views. The reports feature sorting 
+    /// and pagination for enhanced data accessibility.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
 
+        /// <summary>
+        /// Initializes the HomeController with an ILogger and ApplicationDbContext,
+        /// supporting logging and database access for report data.
+        /// </summary>
+        /// <param name="logger">Logger for logging operations within the controller.</param>
+        /// <param name="context">Database context for data access and manipulation.</param>
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
         }
 
+        // GET: DisinfectionReport
+        /// <summary>
+        /// Generates a paginated and sortable report of disinfections for shoes.
+        /// Includes details on each shoe's brand, category, size, and disinfection date.
+        /// Allows sorting by disinfection date, brand, ID, and inclusion date.
+        /// </summary>
+        /// <param name="pageNumber">Optional page number for pagination.</param>
+        /// <param name="sortOrder">Sort criteria for the report (e.g., by date, brand).</param>
+        /// <returns>Paginated view of disinfection reports, sorted as specified.</returns>
         public async Task<ActionResult> DisinfectionReport(int? pageNumber, string sortOrder)
         {
-            //SELECT DISTINCT S.ID, Brand, Category, Size, InclusionDate,
-            //(SELECT TOP 1 DisinfectionDate FROM Disinfection AS D WHERE D.ShoeID = S.ID ORDER BY DisinfectionDate DESC) AS DisinfectionDate
-            //FROM Shoe AS S
-            //LEFT JOIN Disinfection ON Disinfection.ShoeID = S.ID
-            //ORDER BY DisinfectionDate;
             IQueryable<Reports> data =
                 (from s in _context.Shoe
-                join d in _context.Disinfection on s.ID equals d.ShoeID into disinfectionGroup
-                from d in disinfectionGroup.DefaultIfEmpty()
-                select new Reports()
-                {
-                    ID = s.ID,
-                    Brand = s.Brand,
-                    Category = s.Category,
-                    Size = s.Size,
-                    InclusionDate = s.InclusionDate,
-                    DisinfectionDate = (from d2 in _context.Disinfection
-                                        where d2.ShoeID == s.ID
-                                        orderby d2.DisinfectionDate descending
-                                        select d2.DisinfectionDate).FirstOrDefault()
-                }).AsNoTracking().Distinct().OrderBy(x => x.DisinfectionDate);
+                 join d in _context.Disinfection on s.ID equals d.ShoeID into disinfectionGroup
+                 from d in disinfectionGroup.DefaultIfEmpty()
+                 select new Reports()
+                 {
+                     ID = s.ID,
+                     Brand = s.Brand,
+                     Category = s.Category,
+                     Size = s.Size,
+                     InclusionDate = s.InclusionDate,
+                     DisinfectionDate = (from d2 in _context.Disinfection
+                                         where d2.ShoeID == s.ID
+                                         orderby d2.DisinfectionDate descending
+                                         select d2.DisinfectionDate).FirstOrDefault()
+                 }).AsNoTracking().Distinct().OrderBy(x => x.DisinfectionDate);
 
             ViewData["CurrentSort"] = sortOrder;
             ViewData["DisinfectionDateSortParm"] = string.IsNullOrEmpty(sortOrder) ? "disinfectionDate_desc" : "";
             ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
             ViewData["IDSortParm"] = sortOrder == "ID" ? "id_desc" : "ID";
             ViewData["InclusionDateSortParm"] = sortOrder == "InclusionDate" ? "inclusionDate_desc" : "InclusionDate";
-            switch (sortOrder)
+
+            data = sortOrder switch
             {
-                case "disinfectionDate_desc":
-                    data = data.OrderByDescending(s => s.DisinfectionDate);
-                    break;
-                case "Brand":
-                    data = data.OrderBy(s => s.Brand);
-                    break;
-                case "brand_desc":
-                    data = data.OrderByDescending(s => s.Brand);
-                    break;
-                case "ID":
-                    data = data.OrderBy(s => s.ID);
-                    break;
-                case "id_desc":
-                    data = data.OrderByDescending(s => s.ID);
-                    break;
-                case "InclusionDate":
-                    data = data.OrderBy(s => s.InclusionDate);
-                    break;
-                case "inclusionDate_desc":
-                    data = data.OrderByDescending(s => s.InclusionDate);
-                    break;
-                default:
-                    data = data.OrderBy(s => s.DisinfectionDate);
-                    break;
-            }
+                "disinfectionDate_desc" => data.OrderByDescending(s => s.DisinfectionDate),
+                "Brand" => data.OrderBy(s => s.Brand),
+                "brand_desc" => data.OrderByDescending(s => s.Brand),
+                "ID" => data.OrderBy(s => s.ID),
+                "id_desc" => data.OrderByDescending(s => s.ID),
+                "InclusionDate" => data.OrderBy(s => s.InclusionDate),
+                "inclusionDate_desc" => data.OrderByDescending(s => s.InclusionDate),
+                _ => data.OrderBy(s => s.DisinfectionDate),
+            };
+
             int pageSize = 10;
             return View(await PaginatedList<Reports>.CreateAsync(data.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        // GET: RentalReport
+        /// <summary>
+        /// Generates a paginated and sortable report on rental frequency of shoes,
+        /// including brand, category, size, and price. Sort options include count,
+        /// brand, and price, enabling insights into popular rentals.
+        /// </summary>
+        /// <param name="pageNumber">Optional page number for pagination.</param>
+        /// <param name="sortOrder">Sort criteria for the report (e.g., by count, brand).</param>
+        /// <returns>Paginated view of rental frequency reports, sorted as specified.</returns>
         public async Task<ActionResult> RentalReport(int? pageNumber, string sortOrder)
         {
-            //SELECT Brand, Category, Size, Price, COUNT(*) AS Count
-            //FROM Rental JOIN Shoe ON Rental.ShoeID = Shoe.ID
-            //GROUP BY Brand, Category, Size, Price
-            //ORDER BY Count DESC, Price;
             IQueryable<Reports> data =
                 from rental in _context.Rental
                 join shoe in _context.Shoe on rental.ShoeID equals shoe.ID into shoeGroup
@@ -118,36 +125,32 @@ namespace ShoesShelf.Controllers
             ViewData["CountSortParm"] = string.IsNullOrEmpty(sortOrder) ? "Count" : "";
             ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
-            switch (sortOrder)
+
+            data = sortOrder switch
             {
-                case "Count":
-                    data = data.OrderBy(s => s.Count).ThenBy(s => s.Price);
-                    break;
-                case "Brand":
-                    data = data.OrderBy(s => s.Brand);
-                    break;
-                case "brand_desc":
-                    data = data.OrderByDescending(s => s.Brand);
-                    break;
-                case "Price":
-                    data = data.OrderBy(s => s.Price);
-                    break;
-                case "price_desc":
-                    data = data.OrderByDescending(s => s.Price);
-                    break;
-                default:
-                    data = data.OrderByDescending(s => s.Count).ThenByDescending(s => s.Price);
-                    break;
-            }
+                "Count" => data.OrderBy(s => s.Count).ThenBy(s => s.Price),
+                "Brand" => data.OrderBy(s => s.Brand),
+                "brand_desc" => data.OrderByDescending(s => s.Brand),
+                "Price" => data.OrderBy(s => s.Price),
+                "price_desc" => data.OrderByDescending(s => s.Price),
+                _ => data.OrderByDescending(s => s.Count).ThenByDescending(s => s.Price),
+            };
+
             int pageSize = 10;
             return View(await PaginatedList<Reports>.CreateAsync(data.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        // GET: SubstitutionReport
+        /// <summary>
+        /// Generates a paginated and sortable report of shoes with severe defects 
+        /// (Severity level 2) indicating need for substitution, including brand, 
+        /// category, and size. Sort options include brand, size, and category.
+        /// </summary>
+        /// <param name="pageNumber">Optional page number for pagination.</param>
+        /// <param name="sortOrder">Sort criteria for the report (e.g., by brand, size).</param>
+        /// <returns>Paginated view of substitution reports, sorted as specified.</returns>
         public async Task<ActionResult> SubstitutionReport(int? pageNumber, string sortOrder)
         {
-            //SELECT Brand, Category, Size, COUNT(*) AS Count FROM Shoe
-            //JOIN Defect ON Defect.ShoeID = Shoe.ID WHERE Severity = '2'
-            //GROUP BY Brand, Category, Size
             IQueryable<Reports> data =
                 from shoe in _context.Shoe
                 join defect in _context.Defect on shoe.ID equals defect.ShoeID into shoeDefects
@@ -167,47 +170,49 @@ namespace ShoesShelf.Controllers
             ViewData["SizeSortParm"] = sortOrder == "Size" ? "size_desc" : "Size";
             ViewData["CategorySortParm"] = sortOrder == "Category" ? "category_desc" : "Category";
             ViewData["CountSortParm"] = sortOrder == "Count" ? "count_desc" : "Count";
-            switch (sortOrder)
+
+            data = sortOrder switch
             {
-                case "brand_desc":
-                    data = data.OrderByDescending(s => s.Brand);
-                    break;
-                case "Size":
-                    data = data.OrderBy(s => s.Size);
-                    break;
-                case "size_desc":
-                    data = data.OrderByDescending(s => s.Size);
-                    break;
-                case "Category":
-                    data = data.OrderBy(s => s.Category);
-                    break;
-                case "category_desc":
-                    data = data.OrderByDescending(s => s.Category);
-                    break;
-                case "Count":
-                    data = data.OrderBy(s => s.Count);
-                    break;
-                case "count_desc":
-                    data = data.OrderByDescending(s => s.Count);
-                    break;
-                default:
-                    data = data.OrderBy(s => s.Brand);
-                    break;
-            }
+                "brand_desc" => data.OrderByDescending(s => s.Brand),
+                "Size" => data.OrderBy(s => s.Size),
+                "size_desc" => data.OrderByDescending(s => s.Size),
+                "Category" => data.OrderBy(s => s.Category),
+                "category_desc" => data.OrderByDescending(s => s.Category),
+                "Count" => data.OrderBy(s => s.Count),
+                "count_desc" => data.OrderByDescending(s => s.Count),
+                _ => data.OrderBy(s => s.Brand),
+            };
+
             int pageSize = 10;
             return View(await PaginatedList<Reports>.CreateAsync(data.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        // GET: Index
+        /// <summary>
+        /// Returns the main index page view.
+        /// </summary>
+        /// <returns>Main home view.</returns>
         public IActionResult Index()
         {
             return View();
         }
 
+        // GET: Privacy
+        /// <summary>
+        /// Returns the privacy policy view.
+        /// </summary>
+        /// <returns>Privacy policy view.</returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // GET: Error
+        /// <summary>
+        /// Displays the error view, with diagnostic information.
+        /// Caches the response for 0 seconds to prevent storing sensitive error data.
+        /// </summary>
+        /// <returns>Error view with error information.</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

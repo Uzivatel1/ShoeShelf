@@ -10,16 +10,20 @@ using ShoesShelf.Models;
 
 namespace ShoesShelf.Controllers
 {
+    // Controller for managing Shoe entities, including actions for viewing, creating, editing, and deleting shoes
     public class ShoesController : Controller
     {
+        // Dependency Injection: Injects ApplicationDbContext to interact with the database
         private readonly ApplicationDbContext _context;
 
+        // Initializes the controller with the database context via dependency injection
         public ShoesController(ApplicationDbContext context)
         {
             _context = context;
-        }        
-        
+        }
+
         // GET: Shoes
+        // Displays a paginated list of shoes with filtering and sorting options
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilterBrand,
@@ -32,12 +36,14 @@ namespace ShoesShelf.Controllers
             bool? currentFilterUnrented,
             int? pageNumber)
         {
+            // Set current sort options for display in the view
             ViewData["CurrentSort"] = sortOrder;
             ViewData["BrandSortParm"] = String.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
             ViewData["SizeSortParm"] = sortOrder == "Size" ? "size_desc" : "Size";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
+            // Reset page number if new search criteria are applied
             if ((searchBrand != null) || (searchSize != null) || (searchRented != null) || (searchUnrented != null))
             {
                 pageNumber = 1;
@@ -45,116 +51,111 @@ namespace ShoesShelf.Controllers
 
             else
             {
+                // Maintain current filters if no new search criteria are applied
                 searchBrand = currentFilterBrand;
                 searchSize = currentFilterSize;
                 searchRented = currentFilterRented;
                 searchUnrented = currentFilterUnrented;
             }
 
+            // Store the current filter criteria for use in the view
             ViewData["CurrentFilterBrand"] = searchBrand;
             ViewData["CurrentFilterSize"] = searchSize;
             ViewData["CurrentFilterRented"] = searchRented;
             ViewData["CurrentFilterUnrented"] = searchUnrented;
-            
+
+            // Initialize the query for shoes
             var shoes = from s in _context.Shoe
                            select s;
 
-            if (!String.IsNullOrEmpty(searchBrand) && !String.IsNullOrEmpty(searchSize.ToString()) && !String.IsNullOrEmpty(searchRented.ToString()))
+            // Apply filtering based on search criteria
+
+            // Filters on brand, size, and rented/unrented status
+            if (!string.IsNullOrEmpty(searchBrand) && !string.IsNullOrEmpty(searchSize.ToString()) && !string.IsNullOrEmpty(searchRented.ToString()))
             {
                 shoes = shoes.Where(s => s.Brand.Contains(searchBrand) && s.Size.Equals(searchSize) && s.Rented.Equals(searchRented));
             }
 
-            else if (!String.IsNullOrEmpty(searchBrand) && !String.IsNullOrEmpty(searchSize.ToString()) && !String.IsNullOrEmpty(searchUnrented.ToString()))
+            else if (!string.IsNullOrEmpty(searchBrand) && !string.IsNullOrEmpty(searchSize.ToString()) && !string.IsNullOrEmpty(searchUnrented.ToString()))
             {
                 shoes = shoes.Where(s => s.Brand.Contains(searchBrand) && s.Size.Equals(searchSize) && !s.Rented.Equals(searchUnrented));
             }
 
-            else if (!String.IsNullOrEmpty(searchBrand) && !String.IsNullOrEmpty(searchSize.ToString()))
+            else if (!string.IsNullOrEmpty(searchBrand) && !string.IsNullOrEmpty(searchSize.ToString()))
             {
                 shoes = shoes.Where(s => s.Brand.Contains(searchBrand) && s.Size.Equals(searchSize));
             }
 
-            else if (!String.IsNullOrEmpty(searchBrand) && !String.IsNullOrEmpty(searchRented.ToString()))
+            else if (!string.IsNullOrEmpty(searchBrand) && !string.IsNullOrEmpty(searchRented.ToString()))
             {
                 shoes = shoes.Where(s => s.Brand.Contains(searchBrand) && s.Rented.Equals(searchRented));
             }
 
-            else if (!String.IsNullOrEmpty(searchBrand) && !String.IsNullOrEmpty(searchUnrented.ToString()))
+            else if (!string.IsNullOrEmpty(searchBrand) && !string.IsNullOrEmpty(searchUnrented.ToString()))
             {
                 shoes = shoes.Where(s => s.Brand.Contains(searchBrand) && !s.Rented.Equals(searchUnrented));
             }
 
-            if (!String.IsNullOrEmpty(searchSize.ToString()) && !String.IsNullOrEmpty(searchRented.ToString()))
+            if (!string.IsNullOrEmpty(searchSize.ToString()) && !string.IsNullOrEmpty(searchRented.ToString()))
             {
                 shoes = shoes.Where(s => s.Size.Equals(searchSize) && s.Rented.Equals(searchRented));
             }
 
-            else if (!String.IsNullOrEmpty(searchSize.ToString()) && !String.IsNullOrEmpty(searchUnrented.ToString()))
+            else if (!string.IsNullOrEmpty(searchSize.ToString()) && !string.IsNullOrEmpty(searchUnrented.ToString()))
             {
                 shoes = shoes.Where(s => s.Size.Equals(searchSize) && !s.Rented.Equals(searchUnrented));
             }
 
-            else if (!String.IsNullOrEmpty(searchBrand) || !String.IsNullOrEmpty(searchSize.ToString()))
+            else if (!string.IsNullOrEmpty(searchBrand) || !string.IsNullOrEmpty(searchSize.ToString()))
             {
                 shoes = shoes.Where(s => s.Brand.Contains(searchBrand) || s.Size.Equals(searchSize));
             }
 
-            else if (!String.IsNullOrEmpty(searchRented.ToString()))
+            else if (!string.IsNullOrEmpty(searchRented.ToString()))
             {
                 shoes = shoes.Where(s => s.Rented.Equals(searchRented));
             }
 
-            else if (!String.IsNullOrEmpty(searchUnrented.ToString()))
+            else if (!string.IsNullOrEmpty(searchUnrented.ToString()))
             {
                 shoes = shoes.Where(s => !s.Rented.Equals(searchUnrented));
             }
 
-            switch (sortOrder)
+            // Apply sorting based on selected sort order
+            shoes = sortOrder switch
             {
-                case "brand_desc":
-                    shoes = shoes.OrderByDescending(s => s.Brand);
-                    break;
-                case "Size":
-                    shoes = shoes.OrderBy(s => s.Size);
-                    break;
-                case "size_desc":
-                    shoes = shoes.OrderByDescending(s => s.Size);
-                    break;
-                case "Price":
-                    shoes = shoes.OrderBy(s => s.Price);
-                    break;
-                case "price_desc":
-                    shoes = shoes.OrderByDescending(s => s.Price);
-                    break;
-                case "Date":
-                    shoes = shoes.OrderBy(s => s.InclusionDate);
-                    break;
-                case "date_desc":
-                    shoes = shoes.OrderByDescending(s => s.InclusionDate);
-                    break;
-                default:
-                    shoes = shoes.OrderBy(s => s.Brand);
-                    break;
-            }
-
+                "brand_desc" => shoes.OrderByDescending(s => s.Brand),
+                "Size" => shoes.OrderBy(s => s.Size),
+                "size_desc" => shoes.OrderByDescending(s => s.Size),
+                "Price" => shoes.OrderBy(s => s.Price),
+                "price_desc" => shoes.OrderByDescending(s => s.Price),
+                "Date" => shoes.OrderBy(s => s.InclusionDate),
+                "date_desc" => shoes.OrderByDescending(s => s.InclusionDate),
+                _ => shoes.OrderBy(s => s.Brand),
+            };
             int pageSize = 8;
+            // Return the paginated list of shoes to the view
             return View(await PaginatedList<Shoe>.CreateAsync(shoes.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Shoes/Details/5
+        // Retrieves and displays details for a specific shoe, including rentals, disinfections and defects
         public async Task<IActionResult> Details(int? id)
         {
+            // Return 404 if no ID is provided or if the Shoe entity is not in the context
             if (id == null || _context.Shoe == null)
             {
                 return NotFound();
             }
 
+            // Fetch the shoe by ID, including related collections for display in the view
             var shoe = await _context.Shoe
                 .Include(r => r.Rentals)
                 .Include(i => i.Disinfections)
                 .Include(e => e.Defects)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (shoe == null)
             {
                 return NotFound();
@@ -164,9 +165,10 @@ namespace ShoesShelf.Controllers
         }
 
         // GET: Shoes/Create
+        // Returns a view for creating a new shoe, including a list of available sizes
         public IActionResult Create()
         {
-            ViewBag.Sizes = new List<SelectListItem> // https://stackoverflow.com/questions/34624034/select-tag-helper-in-asp-net-core-mvc
+            ViewBag.Sizes = new List<SelectListItem>
             {
                 new() { Value = "37", Text = "37" },
                 new() { Value = "38", Text = "38" },
@@ -181,12 +183,11 @@ namespace ShoesShelf.Controllers
             return View();
         }
 
-        // POST: Shoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Brand,Category,Size,Price,InclusionDate,Rented")] Shoe shoe)
+        // POST: Shoes/Create
+        // Adds a new shoe to the database after validating the model state
+        public async Task<IActionResult> Create([Bind("ID, Brand, Category, Size, Price, InclusionDate, Rented")] Shoe shoe)
         {
             if (ModelState.IsValid)
             {
@@ -198,6 +199,7 @@ namespace ShoesShelf.Controllers
         }
 
         // GET: Shoes/Edit/5
+        // Returns a view for editing an existing shoe
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Shoe == null)
@@ -213,12 +215,11 @@ namespace ShoesShelf.Controllers
             return View(shoe);
         }
 
-        // POST: Shoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Brand,Category,Size,Price,InclusionDate,Rented")] Shoe shoe)
+        // POST: Shoes/Edit/5
+        // Updates an existing shoe record after validation, with error handling for concurrency issues
+        public async Task<IActionResult> Edit(int id, [Bind("ID, Brand, Category, Size, Price, InclusionDate, Rented")] Shoe shoe)
         {
             if (id != shoe.ID)
             {
@@ -249,6 +250,7 @@ namespace ShoesShelf.Controllers
         }
 
         // GET: Shoes/Delete/5
+        // Retrieves and displays the shoe to be deleted
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Shoe == null)
@@ -267,13 +269,14 @@ namespace ShoesShelf.Controllers
         }
 
         // POST: Shoes/Delete/5
+        // Deletes the shoe after confirming the action
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Shoe == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Shoe'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Shoe' is null.");
             }
             var shoe = await _context.Shoe.FindAsync(id);
             if (shoe != null)
@@ -285,6 +288,7 @@ namespace ShoesShelf.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Checks if a shoe exists by ID
         private bool ShoeExists(int id)
         {
           return (_context.Shoe?.Any(e => e.ID == id)).GetValueOrDefault();
