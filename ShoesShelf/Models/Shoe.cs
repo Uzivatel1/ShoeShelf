@@ -37,8 +37,7 @@ namespace ShoesShelf.Models
             new() { Value = "45", Text = "45" },
         };
 
-        [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:N0} Kč", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:N0} Kč")]
         // Stores the price of the shoe in Czech Koruna (Kč) currency format
         public decimal Price { get; set; }
 
