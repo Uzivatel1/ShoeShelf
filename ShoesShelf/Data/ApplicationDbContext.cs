@@ -30,9 +30,9 @@ namespace ShoesShelf.Data
         {
         }
 
-        public DbSet<ShoesShelf.Models.Shoe> Shoe { get; set; }
-        public DbSet<ShoesShelf.Models.Rental> Rental { get; set; }        
-        public DbSet<ShoesShelf.Models.Disinfection> Disinfection { get; set; }
-        public DbSet<ShoesShelf.Models.Defect> Defect { get; set; }
+        public DbSet<Shoe> Shoe { get; set; }
+        public DbSet<Rental> Rental { get; set; }        
+        public DbSet<Disinfection> Disinfection { get; set; }
+        public DbSet<Defect> Defect { get; set; }
     }
 }
