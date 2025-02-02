@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using ShoesShelf.Models;
 namespace ShoesShelf.Controllers
 {
     // Controller for managing Shoe entities, including actions for viewing, creating, editing, and deleting shoes
+    [Authorize(Roles = UserRoles.Admin)]
     public class ShoesController : Controller
     {
         // Dependency Injection: Injects ApplicationDbContext to interact with the database
@@ -24,6 +26,7 @@ namespace ShoesShelf.Controllers
 
         // GET: Shoes
         // Displays a paginated list of shoes with filtering and sorting options
+        [AllowAnonymous]
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilterBrand,
@@ -38,7 +41,7 @@ namespace ShoesShelf.Controllers
         {
             // Set current sort options for display in the view
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["BrandSortParm"] = String.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
+            ViewData["BrandSortParm"] = string.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
             ViewData["SizeSortParm"] = sortOrder == "Size" ? "size_desc" : "Size";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -140,6 +143,7 @@ namespace ShoesShelf.Controllers
 
         // GET: Shoes/Details/5
         // Retrieves and displays details for a specific shoe, including rentals, disinfections and defects
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             // Return 404 if no ID is provided or if the Shoe entity is not in the context

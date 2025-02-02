@@ -1,4 +1,5 @@
-﻿@model PaginatedList<ShoesShelf.Models.Shoe>
+﻿@using ShoesShelf.Data
+@model PaginatedList<ShoesShelf.Models.Shoe>
 
 @{
     ViewData["Title"] = "Shoes";
@@ -35,9 +36,12 @@
     </script>
 }
 
-<p class="py-3">
-    <a class="create-new" asp-action="Create">New Shoes</a>
-</p>
+@if (User.IsInRole(UserRoles.Admin))
+{
+    <p class="py-3">
+        <a class="create-new" asp-action="Create">New Shoes</a>
+    </p>
+}
 
 <form asp-action="Index" method="get">
     <div class="container pb-2">
@@ -128,16 +132,18 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Rented)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
+                @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    }
             </tr>
     }
         </tbody>
     </table>
 </div>
-
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -146,42 +152,45 @@
     var totalPages = Model.TotalPages;
 }
 
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
-   asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
-   asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
-   asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]"
-   class="btn @prevDisabled" id="prev-next">
-    Previous
-</a>
+<div class="pagination-container">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+       asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]"
+       class="btn @prevDisabled" id="prev-next">
+        Previous
+    </a>
 
-@for (int i = 1; i <= totalPages; i++)
-{
-    if (i == actualPage)
+    @for (int i = 1; i <= totalPages; i++)
     {
-        <a class="btn">@actualPage</a>
+        if (i == actualPage)
+        {
+            <a class="btn">@actualPage</a>
+        }
+        else
+        {
+            <a asp-route-pageNumber="@i"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+               asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+               asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+               asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]">
+                <button type="button" class="btn" disabled>@i</button>
+            </a>
+        }
     }
-    else
-    {
-        <a asp-route-pageNumber="@i"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
-           asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
-           asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
-           asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]">
-           <button type="button" class="btn" disabled>@i</button></a>
-    }
-}
 
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
-   asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
-   asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
-   asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]"
-   class="btn @nextDisabled" id="prev-next">
-    Next
-</a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+       asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]"
+       class="btn @nextDisabled" id="prev-next">
+        Next
+    </a>
+</div>

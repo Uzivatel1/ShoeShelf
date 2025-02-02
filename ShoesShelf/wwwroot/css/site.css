@@ -1,11 +1,11 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 #myVideo {
@@ -25,26 +25,25 @@ html {
     filter: invert(1);
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
 
-body {
-    margin-bottom: 60px;
-    color: #292d73;
-}
 
-body > header {
+html, body {
+    height: 100%;
+    margin: 0;
     display: flex;
-    width: 100%;
-    padding: 8px 0;
-    background: #292d73;
-    color: white;
-    position: fixed;
-    top: 0;
-    z-index: 11;
+    flex-direction: column;
 }
+
+    body > header {
+        display: flex;
+        width: 100%;
+        padding: 8px 0;
+        background: #292d73;
+        color: white;
+        position: fixed;
+        top: 0;
+        z-index: 11;
+    }
 
 #logo {
     background: url('../images/logo.png') no-repeat;
@@ -52,41 +51,60 @@ body > header {
     background-position: left center;
 }
 
-#logo > * {
-    margin: 0 0 0 100px;
-}
+    #logo > * {
+        margin: 0 0 0 100px;
+    }
 
-#logo h1 {
-    font-weight: normal;
-    font-size: 1.5em;
-    line-height: 1.2em;
-}
+    #logo h1 {
+        font-weight: normal;
+        font-size: 1.5em;
+        line-height: 1.2em;
+    }
 
-#logo h1 span {
-    font-weight: bold;
-    text-transform: uppercase;
-}
+        #logo h1 span {
+            font-weight: bold;
+            text-transform: uppercase;
+        }
 
-#logo small {
-    text-transform: uppercase;
-    font-size: 0.85em;
-}
+    #logo small {
+        text-transform: uppercase;
+        font-size: 0.85em;
+    }
 
 nav a {
     border-bottom: 2px solid #292d73;
     text-transform: uppercase;
 }
 
-nav a:hover {
-    border-bottom: 2px solid #db4223;
-}
+    nav a:hover {
+        border-bottom: 2px solid #db4223;
+    }
 
 .dropdown-menu {
     background: #292d73;
 }
 
-.dropdown-menu :hover {
-    background: #4d55d6;
+    .dropdown-menu :hover {
+        background: #4d55d6;
+    }
+
+.container {
+    flex: 1; /* Obsah zabírá zbývající prostor mezi headerem a footerem, tlaèí footer dolù */
+}
+
+/* Tlaèítka stránkování: */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+footer {
+    height: 60px;
+    line-height: 60px; /* Vertikální zarovnání textu ve footeru */
+    background-color: #f8f9fa;
+    text-align: center;
+    border-top: 1px solid #ddd;
 }
 
 tr {
@@ -98,9 +116,9 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    color: #292d73;
-}
+    a:hover {
+        color: #292d73;
+    }
 
 .btn, .btn:disabled, #prev-next, #prev-next:disabled {
     color: white;
@@ -108,10 +126,10 @@ a:hover {
     border: #292d73;
 }
 
-.btn:hover, .create-new:hover {
-    color: white;
-    filter: brightness(115%) contrast(85%);
-}
+    .btn:hover, .create-new:hover {
+        color: white;
+        filter: brightness(115%) contrast(85%);
+    }
 
 .btn-danger {
     background: #db4223;
@@ -135,9 +153,9 @@ a:hover {
     accent-color: #4d55d6;
 }
 
-#first:hover, #second:hover {
-    accent-color: #292d73;
-}
+    #first:hover, #second:hover {
+        accent-color: #292d73;
+    }
 
 main h1 {
     color: #292d73;

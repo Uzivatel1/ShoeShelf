@@ -35,7 +35,7 @@ namespace ShoesShelf.Data
             }
 
             // Reset the shoe IDs after a database reset
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Shoe', RESEED, 0)");
+            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('Shoe', RESEED, 1)");
 
             var random = new Random();
             var shoes = new List<Shoe>();
