@@ -36,12 +36,9 @@
     </script>
 }
 
-@if (User.IsInRole(UserRoles.Admin))
-{
-    <p class="py-3">
-        <a class="create-new" asp-action="Create">New Shoes</a>
-    </p>
-}
+<p class="py-3 admin-controls @(User.IsInRole(UserRoles.Admin) ? "visible" : "")">
+    <a class="create-new" asp-action="Create">New Shoes</a>
+</p>
 
 <form asp-action="Index" method="get">
     <div class="container pb-2">
@@ -70,7 +67,14 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Shoes No</th>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["IdSortParm"]"
+                       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+                       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+                       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+                       asp-route-currentFilterUnrented="@ViewData["CurrentFilterUnrented"]">Shoes No</a>
+                </th>
                 <th>
                     <a asp-action="Index"
                        asp-route-sortOrder="@ViewData["BrandSortParm"]"

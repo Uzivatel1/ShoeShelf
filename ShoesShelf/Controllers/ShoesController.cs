@@ -29,19 +29,21 @@ namespace ShoesShelf.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(
             string sortOrder,
+            int currentFilterId,
             string currentFilterBrand,
             double? currentFilterSize,
+            bool? currentFilterRented,
+            bool? currentFilterUnrented,
             string searchBrand,
             double? searchSize,
-            bool? searchRented,
-            bool? currentFilterRented,
-            bool? searchUnrented,
-            bool? currentFilterUnrented,
+            bool? searchRented,            
+            bool? searchUnrented,            
             int? pageNumber)
         {
             // Set current sort options for display in the view
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["BrandSortParm"] = string.IsNullOrEmpty(sortOrder) ? "brand_desc" : "";
+            ViewData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
+            ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
             ViewData["SizeSortParm"] = sortOrder == "Size" ? "size_desc" : "Size";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -127,6 +129,8 @@ namespace ShoesShelf.Controllers
             // Apply sorting based on selected sort order
             shoes = sortOrder switch
             {
+                "id_desc" => shoes.OrderByDescending(s => s.ID),
+                "Brand" => shoes.OrderBy(s => s.Brand),
                 "brand_desc" => shoes.OrderByDescending(s => s.Brand),
                 "Size" => shoes.OrderBy(s => s.Size),
                 "size_desc" => shoes.OrderByDescending(s => s.Size),
@@ -134,9 +138,9 @@ namespace ShoesShelf.Controllers
                 "price_desc" => shoes.OrderByDescending(s => s.Price),
                 "Date" => shoes.OrderBy(s => s.InclusionDate),
                 "date_desc" => shoes.OrderByDescending(s => s.InclusionDate),
-                _ => shoes.OrderBy(s => s.Brand),
+                _ => shoes.OrderBy(s => s.ID),
             };
-            int pageSize = 8;
+            int pageSize = 6;
             // Return the paginated list of shoes to the view
             return View(await PaginatedList<Shoe>.CreateAsync(shoes.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
