@@ -27,6 +27,6 @@ Analytický návrh řešení: relační databázový model pro správu botníku 
 
 Detail jednotlivého páru bot vypíše veškeré jeho vlastnosti včetně typu, velikosti, data zařazení do botníku, pořizovací ceny, celkového počtu vypůjčení pro daný pár, termínu poslední dezinfekce, druhů a závažnosti poškození, a zda je daný pár bot aktuálně zapůjčený.
 
-V aplikaci je implementován autentizační systém.
+V aplikaci je implementován autentizační systém. **Přidání, úprava a odstranění záznamů je umožněno účtu administrátora (přednastaveno).**
 
 HTML úprava je navržena s použitím knihoven Bootstrap a je interaktivní.
