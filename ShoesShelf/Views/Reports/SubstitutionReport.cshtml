@@ -55,30 +55,33 @@
     var totalPages = Model.TotalPages;
 }
 
-<a asp-action="SubstitutionReport"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   class="btn @prevDisabled" id="prev-next">
-    Previous
-</a>
+<div class="pagination-container">
+    <a asp-action="SubstitutionReport"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn @prevDisabled" id="prev-next">
+        Previous
+    </a>
 
-@for (int i = 1; i <= totalPages; i++)
-{
-    if (i == actualPage)
+    @for (int i = 1; i <= totalPages; i++)
     {
-        <a class="btn">@actualPage</a>
+        if (i == actualPage)
+        {
+            <a class="btn">@actualPage</a>
+        }
+        else
+        {
+            <a asp-route-pageNumber="@i"
+               asp-route-sortOrder="@ViewData["CurrentSort"]">
+                <button type="button" class="btn" disabled>@i</button>
+            </a>
+        }
     }
-    else
-    {
-        <a asp-route-pageNumber="@i"
-           asp-route-sortOrder="@ViewData["CurrentSort"]">
-            <button type="button" class="btn" disabled>@i</button></a>
-    }
-}
 
-<a asp-action="SubstitutionReport"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   class="btn @nextDisabled" id="prev-next">
-    Next
-</a>
+    <a asp-action="SubstitutionReport"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn @nextDisabled" id="prev-next">
+        Next
+    </a>
+</div>

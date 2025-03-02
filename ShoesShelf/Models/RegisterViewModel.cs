@@ -4,20 +4,20 @@ namespace ShoesShelf.Models
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Vyplňte uživatelské jméno")]
-        [Display(Name = "Uživatelské jméno")]
+        [Required(ErrorMessage = "Enter user name")]
+        [Display(Name = "User name")]
         public string Login { get; set; } = "";
 
-        [Required(ErrorMessage = "Vyplňte heslo")]
-        [StringLength(100, ErrorMessage = "{0} musí mít délku alespoň {2} a nejvíc {1} znaků.", MinimumLength = 4)]
+        [Required(ErrorMessage = "Enter password")]
+        [StringLength(100, ErrorMessage = "{0} must be at least {2} and at most {1} characters long.", MinimumLength = 4)]
         [DataType(DataType.Password)]
-        [Display(Name = "Heslo")]
+        [Display(Name = "Password")]
         public string Password { get; set; } = "";
 
-        [Required(ErrorMessage = "Vyplňte heslo")]
+        [Required(ErrorMessage = "Enter password")]
         [DataType(DataType.Password)]
-        [Display(Name = "Potvrzení hesla")]
-        [Compare(nameof(Password), ErrorMessage = "Zadaná hesla se musí shodovat.")]
+        [Display(Name = "Confirm password")]
+        [Compare(nameof(Password), ErrorMessage = "The passwords entered must match.")]
         public string ConfirmPassword { get; set; } = "";
     }
 }

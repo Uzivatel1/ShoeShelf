@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace ShoesShelf.Controllers
     /// enabling users to view, create, edit, and delete disinfection records associated with specific shoes.
     /// Includes pagination for listing records efficiently in the Index action.
     /// </summary>
+    [Authorize(Roles = UserRoles.Admin)]
     public class DisinfectionsController : Controller
     {
         // Dependency Injection: Injects the database context to access the Disinfection data
@@ -28,19 +30,21 @@ namespace ShoesShelf.Controllers
         }
 
         // GET: Disinfections - Retrieves and displays a paginated list of disinfections
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? pageNumber)
         {
             // Load all Disinfections along with related Shoe data
             var applicationDbContext = _context.Disinfection.Include(r => r.Shoe);
 
             // Define pagination settings
-            int pageSize = 8;
+            int pageSize = 7;
 
             // Return paginated list of disinfections
             return View(await PaginatedList<Disinfection>.CreateAsync(applicationDbContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Disinfections/Details/5 - Shows details of a specific disinfection by ID
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             // If ID is null or Disinfection entity set is unavailable, return NotFound

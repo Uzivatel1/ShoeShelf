@@ -4,16 +4,16 @@ namespace ShoesShelf.Models
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Vyplňte uživatelské jméno")]
-        [Display(Name = "Uživatelské jméno")]
+        [Required(ErrorMessage = "Enter user name")]
+        [Display(Name = "User name")]
         public string Login { get; set; } = "";
 
-        [Required(ErrorMessage = "Vyplňte heslo")]
+        [Required(ErrorMessage = "Enter password")]
         [DataType(DataType.Password)]
-        [Display(Name = "Heslo")]
+        [Display(Name = "Password")]
         public string Password { get; set; } = "";
 
-        [Display(Name = "Pamatuj si mě")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
     }
 }

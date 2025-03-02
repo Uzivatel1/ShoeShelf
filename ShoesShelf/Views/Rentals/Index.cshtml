@@ -1,10 +1,11 @@
-﻿@model PaginatedList<ShoesShelf.Models.Rental>
+﻿@using ShoesShelf.Data
+@model PaginatedList<ShoesShelf.Models.Rental>
 
 @{
     ViewData["Title"] = "Rentals";
 }
 
-<p class="py-3">
+<p class="py-3 admin-controls @(User.IsInRole(UserRoles.Admin) ? "visible" : "")">
     <a class="create-new" asp-action="Create">New Rental</a>
 </p>
 
@@ -48,10 +49,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.RentalDate)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
+                    @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    }
             </tr>
     }
         </tbody>

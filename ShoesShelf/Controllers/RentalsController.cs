@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace ShoesShelf.Controllers
     /// It integrates with ApplicationDbContext and uses dependency injection for data access,
     /// providing both detailed record views and paginated lists in the Index action.
     /// </summary>
+    [Authorize(Roles = UserRoles.Admin)]
     public class RentalsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,10 +37,11 @@ namespace ShoesShelf.Controllers
         /// </summary>
         /// <param name="pageNumber">Optional page number to display in pagination.</param>
         /// <returns>Paginated view of rental entries.</returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? pageNumber)
         {
             var applicationDbContext = _context.Rental.Include(r => r.Shoe);
-            int pageSize = 8;
+            int pageSize = 7;
             return View(await PaginatedList<Rental>.CreateAsync(applicationDbContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -49,6 +52,7 @@ namespace ShoesShelf.Controllers
         /// </summary>
         /// <param name="id">Rental ID to retrieve.</param>
         /// <returns>Detailed view of the selected rental, or NotFound if rental does not exist.</returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Rental == null)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]ShoesShelf</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -21,7 +21,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNavDropdown">
                     <ul class="navbar-nav flex-grow-1 me-sm-5">
                         <li class="nav-item">
-                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Home" asp-action="Index">Welcome</a>
+                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Reports" asp-action="Index">Welcome</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Shoes" asp-action="Index">Shoes</a>
@@ -40,9 +40,9 @@
                                 Reports
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item text-light" asp-area="" asp-controller="Home" asp-action="RentalReport" style="border-bottom: 2px solid #292d73">Rental Report</a>
-                                <a class="dropdown-item text-light" asp-area="" asp-controller="Home" asp-action="DisinfectionReport" style="border-bottom: 2px solid #292d73">Disinfection Report</a>
-                                <a class="dropdown-item text-light" asp-area="" asp-controller="Home" asp-action="SubstitutionReport" style="border-bottom: 2px solid #292d73">Substitution Report</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Reports" asp-action="RentalReport" style="border-bottom: 2px solid #292d73">Rental Report</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Reports" asp-action="DisinfectionReport" style="border-bottom: 2px solid #292d73">Disinfection Report</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Reports" asp-action="SubstitutionReport" style="border-bottom: 2px solid #292d73">Substitution Report</a>
                             </div>
                         </li>
                     </ul>

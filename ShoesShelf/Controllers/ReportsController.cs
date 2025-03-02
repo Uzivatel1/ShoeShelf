@@ -23,23 +23,23 @@ using System.Composition;
 namespace ShoesShelf.Controllers
 {
     /// <summary>
-    /// HomeController provides various reports and general pages for the application.
+    /// ReportsController provides various reports and general pages for the application.
     /// This includes Disinfection, Rental, and Substitution reports, as well as the 
     /// home index, privacy, and error handling views. The reports feature sorting 
     /// and pagination for enhanced data accessibility.
     /// </summary>
-    public class HomeController : Controller
+    public class ReportsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ReportsController> _logger;
         private readonly ApplicationDbContext _context;
 
         /// <summary>
-        /// Initializes the HomeController with an ILogger and ApplicationDbContext,
+        /// Initializes the ReportsController with an ILogger and ApplicationDbContext,
         /// supporting logging and database access for report data.
         /// </summary>
         /// <param name="logger">Logger for logging operations within the controller.</param>
         /// <param name="context">Database context for data access and manipulation.</param>
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public ReportsController(ILogger<ReportsController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -91,7 +91,7 @@ namespace ShoesShelf.Controllers
                 _ => data.OrderBy(s => s.DisinfectionDate),
             };
 
-            int pageSize = 10;
+            int pageSize = 9;
             return View(await PaginatedList<Reports>.CreateAsync(data.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -136,7 +136,7 @@ namespace ShoesShelf.Controllers
                 _ => data.OrderByDescending(s => s.Count).ThenByDescending(s => s.Price),
             };
 
-            int pageSize = 10;
+            int pageSize = 9;
             return View(await PaginatedList<Reports>.CreateAsync(data.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -183,7 +183,7 @@ namespace ShoesShelf.Controllers
                 _ => data.OrderBy(s => s.Brand),
             };
 
-            int pageSize = 10;
+            int pageSize = 9;
             return View(await PaginatedList<Reports>.CreateAsync(data.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 

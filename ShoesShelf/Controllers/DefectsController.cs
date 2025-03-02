@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace ShoesShelf.Controllers
     /// allowing users to view, create, edit, delete, and sort defects linked to specific shoes.
     /// Includes pagination and sorting functionality for efficient browsing of defect records.
     /// </summary>
+    [Authorize(Roles = UserRoles.Admin)]
     public class DefectsController : Controller
     {
         // Dependency Injection: Injects ApplicationDbContext to interact with the database
@@ -27,6 +29,7 @@ namespace ShoesShelf.Controllers
         }
 
         // GET: Defects - lists all defects with sorting and pagination options
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? pageNumber, string sortOrder)
         {
             ViewData["CurrentSort"] = sortOrder;
@@ -58,11 +61,12 @@ namespace ShoesShelf.Controllers
             };
 
             // Paginate the defects list with a defined page size
-            int pageSize = 8;
+            int pageSize = 7;
             return View(await PaginatedList<Defect>.CreateAsync(defect.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Defects/Details/5 - Shows details for a specific defect
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Defect == null)
