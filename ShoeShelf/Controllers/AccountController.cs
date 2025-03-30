@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShoeShelf.Models;
+using ShoeShelf.Models.ViewModels;
 
 namespace ShoeShelf.Controllers
 {

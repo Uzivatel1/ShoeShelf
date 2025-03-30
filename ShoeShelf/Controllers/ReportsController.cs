@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ShoeShelf.Data;
 using ShoeShelf.Models;
-using ShoeShelf.Models.ShoeViewModels;
 using System.Collections.Concurrent;
 using System;
 using System.Data.Common;
@@ -19,6 +18,7 @@ using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
 using X.PagedList;
 using System.Composition;
+using ShoeShelf.Models.ViewModels;
 
 namespace ShoeShelf.Controllers
 {

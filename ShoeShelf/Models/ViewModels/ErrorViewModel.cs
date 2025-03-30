@@ -1,4 +1,4 @@
-namespace ShoeShelf.Models
+namespace ShoeShelf.Models.ViewModels
 {
     public class ErrorViewModel
     {

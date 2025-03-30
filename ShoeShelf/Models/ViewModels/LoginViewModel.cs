@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShoeShelf.Models
+namespace ShoeShelf.Models.ViewModels
 {
     public class LoginViewModel
     {

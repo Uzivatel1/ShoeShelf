@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShoeShelf.Models.ShoeViewModels
+namespace ShoeShelf.Models
 {
     public class Reports
     {
