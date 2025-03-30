@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShoeShelf.Models.ViewModels
+namespace ShoeShelf.Models
 {
-    public class RegisterViewModel
+    public class UserRegistration
     {
         [Required(ErrorMessage = "Enter user name")]
         [Display(Name = "User name")]

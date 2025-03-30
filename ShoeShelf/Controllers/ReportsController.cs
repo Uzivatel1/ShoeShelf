@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
 using X.PagedList;
 using System.Composition;
-using ShoeShelf.Models.ViewModels;
 
 namespace ShoeShelf.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShoeShelf.Models.ViewModels;
+using ShoeShelf.Models;
 
 namespace ShoeShelf.Controllers
 {
@@ -43,7 +43,7 @@ namespace ShoeShelf.Controllers
         // POST akce pro zpracování přihlášení
         [HttpPost]
         [ValidateAntiForgeryToken] // Chrání proti CSRF útokům
-        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
+        public async Task<IActionResult> Login(UserLogin model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl; // Ukládá návratovou URL do ViewData
 
@@ -75,7 +75,7 @@ namespace ShoeShelf.Controllers
         // POST akce pro zpracování registrace nového uživatele
         [HttpPost]
         [ValidateAntiForgeryToken] // Chrání proti CSRF útokům
-        public async Task<IActionResult> Register(RegisterViewModel model, string? returnUrl = null)
+        public async Task<IActionResult> Register(UserRegistration model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl; // Ukládá návratovou URL do ViewData
 
