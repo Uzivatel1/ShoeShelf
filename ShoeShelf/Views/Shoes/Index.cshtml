@@ -1,0 +1,200 @@
+﻿@using ShoeShelf.Data
+@model PaginatedList<ShoeShelf.Models.Shoe>
+
+@{
+    ViewData["Title"] = "Shoes";
+}
+
+@section scripts {
+    <script type="text/javascript">
+        
+    $("#first").click(function() 
+    {
+        if ($("#first").is(':checked')) 
+        {
+            $("#first-row input[type=checkbox]").prop('checked', true);
+            $("#second-row input[type=checkbox]").prop('checked', false);
+        }
+        else 
+        {
+            $("#first-row input[type=checkbox]").prop('checked', false);
+        }
+    })
+
+    $("#second").click(function() 
+    {
+        if ($("#second").is(':checked')) 
+        {
+            $("#second-row input[type=checkbox]").prop('checked', true);
+            $("#first-row input[type=checkbox]").prop('checked', false);
+        }
+        else 
+        {
+            $("#second-row input[type=checkbox]").prop('checked', false);
+        }
+    })
+    </script>
+}
+
+<p class="py-3 admin-controls @(User.IsInRole(UserRoles.Admin) ? "visible" : "")">
+    <a class="create-new" asp-action="Create">New Shoes</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="container pb-2">
+        <div class="row justify-content-md-start">
+            <div class="col col-md-auto border">
+                Find by brand: <input type="text" name="SearchBrand" value="@ViewData["CurrentFilterBrand"]" />
+            </div>
+            <div class="col col-md-auto border">
+                Find by size: <input type="text" name="SearchSize" value="@ViewData["CurrentFilterSize"]" />
+            </div>
+            <div class="col-md-auto border" id="first-row">
+                Rented: <input type="checkbox" id="first" name="SearchRented" value="true" checked="@ViewData["CurrentFilterRented"]" />
+            </div>
+            <div class="col-md-auto border" id="second-row">
+                Unrented: <input type="checkbox" id="second" name="SearchUnrented" value="true" checked="@ViewData["CurrentFilterUnrented"]" />
+            </div>
+            <div class="col-md-auto ms-5 ps-5">
+                <input type="submit" value="Search" class="btn" /> |
+                <a asp-action="Index">Back to list</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="table-responsive-sm">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["IdSortParm"]"
+                       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+                       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+                       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+                       asp-route-currentFilterUnrented="@ViewData["CurrentFilterUnrented"]">Shoes No</a>
+                </th>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["BrandSortParm"]"
+                       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+                       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+                       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+                       asp-route-currentFilterUnrented="@ViewData["CurrentFilterUnrented"]">Brand</a>
+                </th>
+                <th>Category</th>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["SizeSortParm"]"
+                       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+                       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+                       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+                       asp-route-currentFilterUnrented="@ViewData["CurrentFilterUnrented"]">Size</a>
+                </th>
+                <th>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["PriceSortParm"]"
+                       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+                       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+                       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+                       asp-route-currentFilterUnrented="@ViewData["CurrentFilterUnrented"]">Price</a>
+                </th>
+                <th>
+                    <a asp-action="Index" 
+                       asp-route-sortOrder="@ViewData["DateSortParm"]"
+                       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+                       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+                       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+                       asp-route-currentFilterUnrented="@ViewData["CurrentFilterUnrented"]">Inclusion Date</a>
+                </th>
+                <th>Rented</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+                <tr style="cursor:pointer; color: #292d73" onclick="window.location='@Url.Action("Details", "Shoes", new { item.Id })';">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InclusionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rented)
+                </td>
+                @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    }
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var actualPage = Model.PageIndex;
+    var totalPages = Model.TotalPages;
+}
+
+<div class="pagination-container">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+       asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]"
+       class="btn @prevDisabled" id="prev-next">
+        Previous
+    </a>
+
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        if (i == actualPage)
+        {
+            <a class="btn">@actualPage</a>
+        }
+        else
+        {
+            <a asp-route-pageNumber="@i"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+               asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+               asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+               asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]">
+                <button type="button" class="btn" disabled>@i</button>
+            </a>
+        }
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilterBrand="@ViewData["CurrentFilterBrand"]"
+       asp-route-currentFilterSize="@ViewData["CurrentFilterSize"]"
+       asp-route-currentFilterRented="@ViewData["CurrentFilterRented"]"
+       asp-route-currentFilterUnrented="@ViewData["CurrentFilterunrented"]"
+       class="btn @nextDisabled" id="prev-next">
+        Next
+    </a>
+</div>

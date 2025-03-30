@@ -1,0 +1,96 @@
+﻿@using ShoeShelf.Data
+@model PaginatedList<ShoeShelf.Models.Disinfection>
+
+@{
+    ViewData["Title"] = "Disinfections";
+}
+
+<p class="py-3 admin-controls @(User.IsInRole(UserRoles.Admin) ? "visible" : "")">
+    <a class="create-new" asp-action="Create">New Disinfection</a>
+</p>
+
+<div class="table-responsive-sm">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Shoes No
+                </th>
+                <th>
+                    Brand
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Size
+                </th>
+                <th>
+                    Disinfection Date
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+@foreach (var item in Model) {
+                <tr style=" cursor:pointer; color: #292d73" onclick="window.location='@Url.Action("Details", "Disinfections", new { item.Id })';">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shoe.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shoe.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shoe.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shoe.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisinfectionDate)
+                </td>
+                    @if (User.IsInRole(UserRoles.Admin))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    }
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var actualPage = Model.PageIndex;
+    var totalPages = Model.TotalPages;
+}
+
+<div class="pagination-container">
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn @prevDisabled" id="prev-next">
+        Previous
+    </a>
+
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        if (i == actualPage)
+        {
+            <a class="btn">@actualPage</a>
+        }
+        else
+        {
+            <a asp-route-pageNumber="@i"><button type="button" class="btn" disabled>@i</button></a>
+        }
+    }
+
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn @nextDisabled" id="prev-next">
+        Next
+    </a>
+</div>

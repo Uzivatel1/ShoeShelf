@@ -1,0 +1,103 @@
+﻿@model PaginatedList<ShoeShelf.Models.ShoeViewModels.Reports>
+
+@{
+    ViewData["Title"] = "Disinfection Report";
+}
+
+<div class="table-responsive-sm">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="DisinfectionReport"
+                       asp-route-sortOrder="@ViewData["IdSortParm"]">Shoes ID</a>
+                </th>
+                <th>
+                    <a asp-action="DisinfectionReport"
+                       asp-route-sortOrder="@ViewData["BrandSortParm"]">Brand</a>
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Size
+                </th>
+                <th>
+                    <a asp-action="DisinfectionReport"
+                       asp-route-sortOrder="@ViewData["InclusionDateSortParm"]">Inclusion Date</a>
+                </th>
+                <th>
+                    <a asp-action="DisinfectionReport"
+                       asp-route-sortOrder="@ViewData["DisinfectionDateSortParm"]">Last Disinfection</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="color: #292d73">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InclusionDate)
+                </td>
+                <td>
+                    @if (item.DisinfectionDate == DateTime.Parse("01.01.0001"))
+                    {
+                        <span>Not yet disinfected</span>
+                    }
+                    else @Html.DisplayFor(modelItem => item.DisinfectionDate)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var actualPage = Model.PageIndex;
+    var totalPages = Model.TotalPages;
+}
+
+<div class="pagination-container">
+    <a asp-action="DisinfectionReport"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn @prevDisabled" id="prev-next">
+        Previous
+    </a>
+
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        if (i == actualPage)
+        {
+            <a class="btn">@actualPage</a>
+        }
+        else
+        {
+            <a asp-route-pageNumber="@i"
+               asp-route-sortOrder="@ViewData["CurrentSort"]">
+                <button type="button" class="btn" disabled>@i</button>
+            </a>
+        }
+    }
+
+    <a asp-action="DisinfectionReport"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn @nextDisabled" id="prev-next">
+        Next
+    </a>
+</div>

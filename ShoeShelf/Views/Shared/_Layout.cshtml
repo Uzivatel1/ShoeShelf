@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="shadow justify-content-sm-evenly">
+        <a class="text-light" asp-area="" asp-controller="Shoes" asp-action="Index">
+            <div id="logo" class="d-sm-flex align-items-sm-start flex-column my-auto"><h1>Shoe<span>Shelf</span></h1><small>bowling</small></div>
+        </a>        
+        <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm justify-content-between" style="background-color: #292d73">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" 
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNavDropdown">
+                    <ul class="navbar-nav flex-grow-1 me-sm-5">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Reports" asp-action="Index">Welcome</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Shoes" asp-action="Index">Shoes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Rentals" asp-action="Index">Rental</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Disinfections" asp-action="Index">Disinfection</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" asp-controller="Defects" asp-action="Index">Defects</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" style="padding: 8px 0; margin: 0 8px" asp-area="" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Reports
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Reports" asp-action="RentalReport" style="border-bottom: 2px solid #292d73">Rental Report</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Reports" asp-action="DisinfectionReport" style="border-bottom: 2px solid #292d73">Disinfection Report</a>
+                                <a class="dropdown-item text-light" asp-area="" asp-controller="Reports" asp-action="SubstitutionReport" style="border-bottom: 2px solid #292d73">Substitution Report</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="mx-sm-5"></ul>
+                    <ul class="mx-sm-5"></ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-5 pt-3">
+        <main role="main" class="pt-4">
+            <header class="pb-3">
+                <h1>@ViewData["Title"]</h1>
+            </header>
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - ShoeShelf - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

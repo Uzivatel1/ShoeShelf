@@ -1,0 +1,92 @@
+﻿@model PaginatedList<ShoeShelf.Models.ShoeViewModels.Reports>
+
+@{
+    ViewData["Title"] = "Rental Report";
+}
+
+<div class="table-responsive-sm">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="RentalReport"
+                       asp-route-sortOrder="@ViewData["BrandSortParm"]">Brand</a>
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Size
+                </th>
+                <th>
+                    <a asp-action="RentalReport"
+                       asp-route-sortOrder="@ViewData["PriceSortParm"]">Price</a>
+                </th>
+                <th>
+                    <a asp-action="RentalReport"
+                       asp-route-sortOrder="@ViewData["CountSortParm"]">Rentals Count</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="color: #292d73">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var actualPage = Model.PageIndex;
+    var totalPages = Model.TotalPages;
+}
+
+<div class="pagination-container">
+    <a asp-action="RentalReport"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn @prevDisabled" id="prev-next">
+        Previous
+    </a>
+
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        if (i == actualPage)
+        {
+            <a class="btn">@actualPage</a>
+        }
+        else
+        {
+            <a asp-route-pageNumber="@i"
+               asp-route-sortOrder="@ViewData["CurrentSort"]">
+                <button type="button" class="btn" disabled>@i</button>
+            </a>
+        }
+    }
+
+    <a asp-action="RentalReport"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn @nextDisabled" id="prev-next">
+        Next
+    </a>
+</div>
