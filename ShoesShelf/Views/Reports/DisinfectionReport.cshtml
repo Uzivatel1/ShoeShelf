@@ -10,7 +10,7 @@
             <tr>
                 <th>
                     <a asp-action="DisinfectionReport"
-                       asp-route-sortOrder="@ViewData["IDSortParm"]">Shoes ID</a>
+                       asp-route-sortOrder="@ViewData["IdSortParm"]">Shoes ID</a>
                 </th>
                 <th>
                     <a asp-action="DisinfectionReport"
@@ -37,7 +37,7 @@
         {
             <tr style="color: #292d73">
                 <td>
-                    @Html.DisplayFor(modelItem => item.ID)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Brand)

@@ -43,20 +43,20 @@ namespace ShoesShelf.Controllers
             return View(await PaginatedList<Disinfection>.CreateAsync(applicationDbContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: Disinfections/Details/5 - Shows details of a specific disinfection by ID
+        // GET: Disinfections/Details/5 - Shows details of a specific disinfection by Id
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
-            // If ID is null or Disinfection entity set is unavailable, return NotFound
+            // If Id is null or Disinfection entity set is unavailable, return NotFound
             if (id == null || _context.Disinfection == null)
             {
                 return NotFound();
             }
 
-            // Retrieve Disinfection with Shoe data based on the provided ID
+            // Retrieve Disinfection with Shoe data based on the provided Id
             var disinfection = await _context.Disinfection
                 .Include(d => d.Shoe)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             // If the specified Disinfection is not found, return NotFound
             if (disinfection == null)
@@ -71,15 +71,15 @@ namespace ShoesShelf.Controllers
         // GET: Disinfections/Create - Renders a form for creating a new disinfection record
         public IActionResult Create()
         {
-            // Populate dropdown with available Shoe IDs and their FullDefinition descriptions
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition");
+            // Populate dropdown with available Shoe Ids and their FullDefinition descriptions
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition");
             return View();
         }
 
         // POST: Disinfections/Create - Saves a new disinfection record to the database
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID, ShoeID, DisinfectionDate")] Disinfection disinfection)
+        public async Task<IActionResult> Create([Bind("Id, ShoeId, DisinfectionDate")] Disinfection disinfection)
         {
             // Check if the model state is valid before saving
             if (ModelState.IsValid)
@@ -93,20 +93,20 @@ namespace ShoesShelf.Controllers
             }
 
             // If model validation fails, re-render the Create view with Shoe options
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", disinfection.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", disinfection.ShoeId);
             return View(disinfection);
         }
 
         // GET: Disinfections/Edit/5 - Retrieves a specific disinfection for editing
         public async Task<IActionResult> Edit(int? id)
         {
-            // If ID is null or Disinfection entity set is unavailable, return NotFound
+            // If Id is null or Disinfection entity set is unavailable, return NotFound
             if (id == null || _context.Disinfection == null)
             {
                 return NotFound();
             }
 
-            // Retrieve the specific Disinfection record by ID
+            // Retrieve the specific Disinfection record by I
             var disinfection = await _context.Disinfection.FindAsync(id);
 
             // If the specified Disinfection is not found, return NotFound
@@ -115,8 +115,8 @@ namespace ShoesShelf.Controllers
                 return NotFound();
             }
 
-            // Populate dropdown with available Shoe IDs and their FullDefinition for selection
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", disinfection.ShoeID);
+            // Populate dropdown with available Shoe Ids and their FullDefinition for selection
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", disinfection.ShoeId);
 
             // Render the Edit view with the selected Disinfection data
             return View(disinfection);
@@ -125,10 +125,10 @@ namespace ShoesShelf.Controllers
         // POST: Disinfections/Edit/5 - Updates an existing disinfection record in the database
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID, ShoeID, DisinfectionDate")] Disinfection disinfection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, ShoeId, DisinfectionDate")] Disinfection disinfection)
         {
-            // Check if the ID of the disinfection being edited matches the provided ID
-            if (id != disinfection.ID)
+            // Check if the Id of the disinfection being edited matches the provided Id
+            if (id != disinfection.Id)
             {
                 return NotFound();
             }
@@ -145,7 +145,7 @@ namespace ShoesShelf.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     // Handle concurrency issues by checking if the record still exists
-                    if (!DisinfectionExists(disinfection.ID))
+                    if (!DisinfectionExists(disinfection.Id))
                     {
                         return NotFound();
                     }
@@ -160,23 +160,23 @@ namespace ShoesShelf.Controllers
             }
 
             // If validation fails, reload dropdown and re-render Edit view
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", disinfection.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", disinfection.ShoeId);
             return View(disinfection);
         }
 
         // GET: Disinfections/Delete/5 - Confirms deletion of a specific disinfection record
         public async Task<IActionResult> Delete(int? id)
         {
-            // If ID is null or Disinfection entity set is unavailable, return NotFound
+            // If Id is null or Disinfection entity set is unavailable, return NotFound
             if (id == null || _context.Disinfection == null)
             {
                 return NotFound();
             }
 
-            // Retrieve the Disinfection by ID, including Shoe data for display
+            // Retrieve the Disinfection by Id, including Shoe data for display
             var disinfection = await _context.Disinfection
                 .Include(d => d.Shoe)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             // If the specified Disinfection is not found, return NotFound
             if (disinfection == null)
@@ -199,7 +199,7 @@ namespace ShoesShelf.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Disinfection' is null.");
             }
 
-            // Retrieve and delete the Disinfection record by ID
+            // Retrieve and delete the Disinfection record by Id
             var disinfection = await _context.Disinfection.FindAsync(id);
             if (disinfection != null)
             {
@@ -211,10 +211,10 @@ namespace ShoesShelf.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Helper method to check if a Disinfection record with the given ID exists
+        // Helper method to check if a Disinfection record with the given Id exists
         private bool DisinfectionExists(int id)
         {
-          return (_context.Disinfection?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Disinfection?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace ShoesShelf.Controllers
         /// <summary>
         /// Generates a paginated and sortable report of disinfections for shoes.
         /// Includes details on each shoe's brand, category, size, and disinfection date.
-        /// Allows sorting by disinfection date, brand, ID, and inclusion date.
+        /// Allows sorting by disinfection date, brand, Id, and inclusion date.
         /// </summary>
         /// <param name="pageNumber">Optional page number for pagination.</param>
         /// <param name="sortOrder">Sort criteria for the report (e.g., by date, brand).</param>
@@ -58,17 +58,17 @@ namespace ShoesShelf.Controllers
         {
             IQueryable<Reports> data =
                 (from s in _context.Shoe
-                 join d in _context.Disinfection on s.ID equals d.ShoeID into disinfectionGroup
+                 join d in _context.Disinfection on s.Id equals d.ShoeId into disinfectionGroup
                  from d in disinfectionGroup.DefaultIfEmpty()
                  select new Reports()
                  {
-                     ID = s.ID,
+                     Id = s.Id,
                      Brand = s.Brand,
                      Category = s.Category,
                      Size = s.Size,
                      InclusionDate = s.InclusionDate,
                      DisinfectionDate = (from d2 in _context.Disinfection
-                                         where d2.ShoeID == s.ID
+                                         where d2.ShoeId == s.Id
                                          orderby d2.DisinfectionDate descending
                                          select d2.DisinfectionDate).FirstOrDefault()
                  }).AsNoTracking().Distinct().OrderBy(x => x.DisinfectionDate);
@@ -76,7 +76,7 @@ namespace ShoesShelf.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["DisinfectionDateSortParm"] = string.IsNullOrEmpty(sortOrder) ? "disinfectionDate_desc" : "";
             ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
-            ViewData["IDSortParm"] = sortOrder == "ID" ? "id_desc" : "ID";
+            ViewData["IdSortParm"] = sortOrder == "Id" ? "id_desc" : "Id";
             ViewData["InclusionDateSortParm"] = sortOrder == "InclusionDate" ? "inclusionDate_desc" : "InclusionDate";
 
             data = sortOrder switch
@@ -84,8 +84,8 @@ namespace ShoesShelf.Controllers
                 "disinfectionDate_desc" => data.OrderByDescending(s => s.DisinfectionDate),
                 "Brand" => data.OrderBy(s => s.Brand),
                 "brand_desc" => data.OrderByDescending(s => s.Brand),
-                "ID" => data.OrderBy(s => s.ID),
-                "id_desc" => data.OrderByDescending(s => s.ID),
+                "Id" => data.OrderBy(s => s.Id),
+                "id_desc" => data.OrderByDescending(s => s.Id),
                 "InclusionDate" => data.OrderBy(s => s.InclusionDate),
                 "inclusionDate_desc" => data.OrderByDescending(s => s.InclusionDate),
                 _ => data.OrderBy(s => s.DisinfectionDate),
@@ -108,7 +108,7 @@ namespace ShoesShelf.Controllers
         {
             IQueryable<Reports> data =
                 from rental in _context.Rental
-                join shoe in _context.Shoe on rental.ShoeID equals shoe.ID into shoeGroup
+                join shoe in _context.Shoe on rental.ShoeId equals shoe.Id into shoeGroup
                 from shoe in shoeGroup.DefaultIfEmpty()
                 group new { rental, shoe } by new { shoe.Brand, shoe.Category, shoe.Size, shoe.Price } into g
                 orderby g.Count() descending, g.Key.Price
@@ -153,10 +153,10 @@ namespace ShoesShelf.Controllers
         {
             IQueryable<Reports> data =
                 from shoe in _context.Shoe
-                join defect in _context.Defect on shoe.ID equals defect.ShoeID into shoeDefects
+                join defect in _context.Defect on shoe.Id equals defect.ShoeId into shoeDefects
                 from sd in shoeDefects.DefaultIfEmpty()
                 where sd.Severity == (Severity)2
-                group new { shoe.ID, shoe.Brand, shoe.Category, shoe.Size } by new { shoe.Brand, shoe.Category, shoe.Size } into g
+                group new { shoe.Id, shoe.Brand, shoe.Category, shoe.Size } by new { shoe.Brand, shoe.Category, shoe.Size } into g
                 select new Reports()
                 {
                     Brand = g.Key.Brand,

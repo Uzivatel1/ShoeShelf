@@ -5,11 +5,11 @@ namespace ShoesShelf.Models
     // Represents a record of a disinfection process applied to a shoe, including the date of disinfection
     public class Disinfection
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Shoes")]
         // Foreign key linking to the associated Shoe entity
-        public int ShoeID { get; set; }
+        public int ShoeId { get; set; }
 
         // Navigation property for accessing the related Shoe details
         public Shoe Shoe { get; set; }

@@ -5,11 +5,11 @@ namespace ShoesShelf.Models
     // Represents a record of a rental event for a shoe, including details like rental date
     public class Rental
     {        
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Shoes")]
         // Foreign key linking to the associated Shoe entity
-        public int ShoeID { get; set; }
+        public int ShoeId { get; set; }
 
         // Navigation property to access details of the rented Shoe
         public Shoe Shoe { get; set; }

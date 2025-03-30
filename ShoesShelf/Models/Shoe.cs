@@ -12,7 +12,7 @@ namespace ShoesShelf.Models
     public class Shoe
     {
         [Display(Name = "Shoes No")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Brand { get; set; }
@@ -63,7 +63,7 @@ namespace ShoesShelf.Models
         {
             get
             {
-                return ID + " " + Brand + " " + Category + " " + Size;
+                return Id + " " + Brand + " " + Category + " " + Size;
             }
         }
     }

@@ -33,7 +33,7 @@ namespace ShoesShelf.Controllers
         public async Task<IActionResult> Index(int? pageNumber, string sortOrder)
         {
             ViewData["CurrentSort"] = sortOrder;
-            ViewData["IDSortParm"] = String.IsNullOrEmpty(sortOrder) ? "shoeID_desc" : "";
+            ViewData["IdSortParm"] = string.IsNullOrEmpty(sortOrder) ? "shoeId_desc" : "";
             ViewData["BrandSortParm"] = sortOrder == "Brand" ? "brand_desc" : "Brand";
             ViewData["CategorySortParm"] = sortOrder == "Category" ? "category_desc" : "Category";
             ViewData["SizeSortParm"] = sortOrder == "Size" ? "size_desc" : "Size";
@@ -46,7 +46,7 @@ namespace ShoesShelf.Controllers
             // Sorting logic based on the selected sort order
             defect = sortOrder switch
             {
-                "shoeID_desc" => defect.OrderByDescending(s => s.Shoe.ID),
+                "shoeId_desc" => defect.OrderByDescending(s => s.Shoe.Id),
                 "Brand" => defect.OrderBy(s => s.Shoe.Brand),
                 "brand_desc" => defect.OrderByDescending(s => s.Shoe.Brand),
                 "Category" => defect.OrderBy(s => s.Shoe.Category),
@@ -57,7 +57,7 @@ namespace ShoesShelf.Controllers
                 "defect_desc" => defect.OrderByDescending(s => s.Description),
                 "Severity" => defect.OrderBy(s => s.Severity),
                 "severity_desc" => defect.OrderByDescending(s => s.Severity),
-                _ => defect.OrderBy(s => s.ShoeID),
+                _ => defect.OrderBy(s => s.ShoeId),
             };
 
             // Paginate the defects list with a defined page size
@@ -74,10 +74,10 @@ namespace ShoesShelf.Controllers
                 return NotFound();
             }
 
-            // Retrieve defect by ID and include associated Shoe data
+            // Retrieve defect by Id and include associated Shoe data
             var defect = await _context.Defect
                 .Include(d => d.Shoe)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (defect == null)
             {
                 return NotFound();
@@ -89,23 +89,15 @@ namespace ShoesShelf.Controllers
         // GET: Defects/Create - Renders form to create a new defect
         public IActionResult Create()
         {
-            ViewBag.Descriptions = new List<SelectListItem>
-            {
-                new() { Value = "Cracked sole", Text = "Cracked sole" },
-                new() { Value = "Cracked stitching", Text = "Cracked stitching" },
-                new() { Value = "Cracked upper material", Text = "Cracked upper material" },
-                new() { Value = "Destruction of the surface", Text = "Destruction of the surface" },
-                new() { Value = "Heel release", Text = "Heel release" },
-                new() { Value = "Ungluing", Text = "Ungluing" },
-            };
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition");
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition");
+            ViewBag.Descriptions = new Defect().Descriptions;            
             return View();
         }
 
         // POST: Defects/Create - Saves a new defect to the database
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID, ShoeID, Severity, Description")] Defect defect)
+        public async Task<IActionResult> Create([Bind("Id, ShoeId, Severity, Description")] Defect defect)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +105,7 @@ namespace ShoesShelf.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", defect.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", defect.ShoeId);
             return View(defect);
         }
 
@@ -125,31 +117,23 @@ namespace ShoesShelf.Controllers
                 return NotFound();
             }
 
-            // Load defect data by ID for editing
+            // Load defect data by Id for editing
             var defect = await _context.Defect.FindAsync(id);
             if (defect == null)
             {
                 return NotFound();
             }
-            ViewBag.Descriptions = new List<SelectListItem>
-            {
-                new() { Value = "Cracked sole", Text = "Cracked sole" },
-                new() { Value = "Cracked stitching", Text = "Cracked stitching" },
-                new() { Value = "Cracked upper material", Text = "Cracked upper material" },
-                new() { Value = "Destruction of the surface", Text = "Destruction of the surface" },
-                new() { Value = "Heel release", Text = "Heel release" },
-                new() { Value = "Ungluing", Text = "Ungluing" },
-            };
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", defect.ShoeID);
+            ViewBag.Descriptions = new Defect().Descriptions;
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", defect.ShoeId);
             return View(defect);
         }
 
         // POST: Defects/Edit/5 - Updates an existing defect in the database
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID, ShoeID, Severity, Description")] Defect defect)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, ShoeId, Severity, Description")] Defect defect)
         {
-            if (id != defect.ID)
+            if (id != defect.Id)
             {
                 return NotFound();
             }
@@ -163,7 +147,7 @@ namespace ShoesShelf.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DefectExists(defect.ID))
+                    if (!DefectExists(defect.Id))
                     {
                         return NotFound();
                     }
@@ -174,7 +158,7 @@ namespace ShoesShelf.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", defect.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", defect.ShoeId);
             return View(defect);
         }
 
@@ -186,10 +170,10 @@ namespace ShoesShelf.Controllers
                 return NotFound();
             }
 
-            // Retrieve defect by ID to confirm deletion
+            // Retrieve defect by Id to confirm deletion
             var defect = await _context.Defect
                 .Include(d => d.Shoe)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (defect == null)
             {
                 return NotFound();
@@ -217,10 +201,10 @@ namespace ShoesShelf.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Utility method to check if a defect with a given ID exists
+        // Utility method to check if a defect with a given Id exists
         private bool DefectExists(int id)
         {
-          return _context.Defect.Any(e => e.ID == id);
+          return _context.Defect.Any(e => e.Id == id);
         }
     }
 }

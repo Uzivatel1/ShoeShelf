@@ -47,10 +47,10 @@ namespace ShoesShelf.Controllers
 
         // GET: Rentals/Details/5
         /// <summary>
-        /// Retrieves details of a specific rental by ID, including associated shoe information.
+        /// Retrieves details of a specific rental by Id, including associated shoe information.
         /// Returns NotFound if the rental is not found.
         /// </summary>
-        /// <param name="id">Rental ID to retrieve.</param>
+        /// <param name="id">Rental Id to retrieve.</param>
         /// <returns>Detailed view of the selected rental, or NotFound if rental does not exist.</returns>
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
@@ -62,7 +62,7 @@ namespace ShoesShelf.Controllers
 
             var rental = await _context.Rental
                 .Include(r => r.Shoe)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rental == null)
             {
                 return NotFound();
@@ -78,7 +78,7 @@ namespace ShoesShelf.Controllers
         /// <returns>Create view with a form for adding a new rental.</returns>
         public IActionResult Create()
         {
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition");
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition");
             return View();
         }
 
@@ -91,7 +91,7 @@ namespace ShoesShelf.Controllers
         /// <returns>Redirects to Index if successful, or the Create view with validation errors if not.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID, ShoeID, RentalDate")] Rental rental)
+        public async Task<IActionResult> Create([Bind("Id, ShoeId, RentalDate")] Rental rental)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace ShoesShelf.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", rental.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", rental.ShoeId);
             return View(rental);
         }
 
@@ -108,7 +108,7 @@ namespace ShoesShelf.Controllers
         /// Provides a form for editing an existing rental record.
         /// Returns NotFound if the rental does not exist.
         /// </summary>
-        /// <param name="id">Rental ID to edit.</param>
+        /// <param name="id">Rental Id to edit.</param>
         /// <returns>Edit view with populated rental data, or NotFound if rental is not found.</returns>
         public async Task<IActionResult> Edit(int? id)
         {
@@ -122,7 +122,7 @@ namespace ShoesShelf.Controllers
             {
                 return NotFound();
             }
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", rental.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", rental.ShoeId);
             return View(rental);
         }
 
@@ -131,14 +131,14 @@ namespace ShoesShelf.Controllers
         /// Saves the edited rental details to the database.
         /// Handles concurrency exceptions if the rental record was modified elsewhere.
         /// </summary>
-        /// <param name="id">Rental ID being edited.</param>
+        /// <param name="id">Rental Id being edited.</param>
         /// <param name="rental">Updated rental data to save.</param>
         /// <returns>Redirects to Index if successful; redisplays Edit view if there are validation errors.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID, ShoeID, RentalDate")] Rental rental)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, ShoeId, RentalDate")] Rental rental)
         {
-            if (id != rental.ID)
+            if (id != rental.Id)
             {
                 return NotFound();
             }
@@ -152,7 +152,7 @@ namespace ShoesShelf.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RentalExists(rental.ID))
+                    if (!RentalExists(rental.Id))
                     {
                         return NotFound();
                     }
@@ -163,7 +163,7 @@ namespace ShoesShelf.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ShoeID"] = new SelectList(_context.Shoe, "ID", "FullDefinition", rental.ShoeID);
+            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition", rental.ShoeId);
             return View(rental);
         }
 
@@ -172,7 +172,7 @@ namespace ShoesShelf.Controllers
         /// Displays a confirmation view for deleting a specific rental.
         /// Returns NotFound if the rental does not exist.
         /// </summary>
-        /// <param name="id">Rental ID to delete.</param>
+        /// <param name="id">Rental Id to delete.</param>
         /// <returns>Confirmation view for deletion, or NotFound if rental is not found.</returns>
         public async Task<IActionResult> Delete(int? id)
         {
@@ -183,7 +183,7 @@ namespace ShoesShelf.Controllers
 
             var rental = await _context.Rental
                 .Include(r => r.Shoe)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rental == null)
             {
                 return NotFound();
@@ -197,7 +197,7 @@ namespace ShoesShelf.Controllers
         /// Confirms deletion of a rental record. Redirects to Index upon successful deletion.
         /// Returns Problem if the Rental entity set is null.
         /// </summary>
-        /// <param name="id">Rental ID to delete.</param>
+        /// <param name="id">Rental Id to delete.</param>
         /// <returns>Redirects to Index if successful, or Problem if context is null.</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -219,13 +219,13 @@ namespace ShoesShelf.Controllers
 
         // Helper Method
         /// <summary>
-        /// Checks if a rental record exists in the database by ID.
+        /// Checks if a rental record exists in the database by Id.
         /// </summary>
-        /// <param name="id">Rental ID to verify.</param>
+        /// <param name="id">Rental Id to verify.</param>
         /// <returns>True if rental exists; otherwise, false.</returns>
         private bool RentalExists(int id)
         {
-            return _context.Rental.Any(e => e.ID == id);
+            return _context.Rental.Any(e => e.Id == id);
         }
     }
 }

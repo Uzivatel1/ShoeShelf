@@ -129,7 +129,7 @@ namespace ShoesShelf.Controllers
             // Apply sorting based on selected sort order
             shoes = sortOrder switch
             {
-                "id_desc" => shoes.OrderByDescending(s => s.ID),
+                "id_desc" => shoes.OrderByDescending(s => s.Id),
                 "Brand" => shoes.OrderBy(s => s.Brand),
                 "brand_desc" => shoes.OrderByDescending(s => s.Brand),
                 "Size" => shoes.OrderBy(s => s.Size),
@@ -138,7 +138,7 @@ namespace ShoesShelf.Controllers
                 "price_desc" => shoes.OrderByDescending(s => s.Price),
                 "Date" => shoes.OrderBy(s => s.InclusionDate),
                 "date_desc" => shoes.OrderByDescending(s => s.InclusionDate),
-                _ => shoes.OrderBy(s => s.ID),
+                _ => shoes.OrderBy(s => s.Id),
             };
             int pageSize = 6;
             // Return the paginated list of shoes to the view
@@ -150,19 +150,19 @@ namespace ShoesShelf.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
-            // Return 404 if no ID is provided or if the Shoe entity is not in the context
+            // Return 404 if no Id is provided or if the Shoe entity is not in the context
             if (id == null || _context.Shoe == null)
             {
                 return NotFound();
             }
 
-            // Fetch the shoe by ID, including related collections for display in the view
+            // Fetch the shoe by Id, including related collections for display in the view
             var shoe = await _context.Shoe
                 .Include(r => r.Rentals)
                 .Include(i => i.Disinfections)
                 .Include(e => e.Defects)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (shoe == null)
             {
@@ -176,18 +176,7 @@ namespace ShoesShelf.Controllers
         // Returns a view for creating a new shoe, including a list of available sizes
         public IActionResult Create()
         {
-            ViewBag.Sizes = new List<SelectListItem>
-            {
-                new() { Value = "37", Text = "37" },
-                new() { Value = "38", Text = "38" },
-                new() { Value = "39", Text = "39" },
-                new() { Value = "40", Text = "40" },
-                new() { Value = "41", Text = "41" },
-                new() { Value = "42", Text = "42" },
-                new() { Value = "43", Text = "43" },
-                new() { Value = "44", Text = "44" },
-                new() { Value = "45", Text = "45" },
-            };
+            ViewBag.Sizes = new Shoe().Sizes;
             return View();
         }
 
@@ -195,7 +184,7 @@ namespace ShoesShelf.Controllers
         [ValidateAntiForgeryToken]
         // POST: Shoes/Create
         // Adds a new shoe to the database after validating the model state
-        public async Task<IActionResult> Create([Bind("ID, Brand, Category, Size, Price, InclusionDate, Rented")] Shoe shoe)
+        public async Task<IActionResult> Create([Bind("Id, Brand, Category, Size, Price, InclusionDate, Rented")] Shoe shoe)
         {
             if (ModelState.IsValid)
             {
@@ -227,9 +216,9 @@ namespace ShoesShelf.Controllers
         [ValidateAntiForgeryToken]
         // POST: Shoes/Edit/5
         // Updates an existing shoe record after validation, with error handling for concurrency issues
-        public async Task<IActionResult> Edit(int id, [Bind("ID, Brand, Category, Size, Price, InclusionDate, Rented")] Shoe shoe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Brand, Category, Size, Price, InclusionDate, Rented")] Shoe shoe)
         {
-            if (id != shoe.ID)
+            if (id != shoe.Id)
             {
                 return NotFound();
             }
@@ -243,7 +232,7 @@ namespace ShoesShelf.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ShoeExists(shoe.ID))
+                    if (!ShoeExists(shoe.Id))
                     {
                         return NotFound();
                     }
@@ -267,7 +256,7 @@ namespace ShoesShelf.Controllers
             }
 
             var shoe = await _context.Shoe
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (shoe == null)
             {
                 return NotFound();
@@ -296,10 +285,10 @@ namespace ShoesShelf.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Checks if a shoe exists by ID
+        // Checks if a shoe exists by Id
         private bool ShoeExists(int id)
         {
-          return (_context.Shoe?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Shoe?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

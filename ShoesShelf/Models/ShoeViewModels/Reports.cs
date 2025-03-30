@@ -5,7 +5,7 @@ namespace ShoesShelf.Models.ShoeViewModels
 {
     public class Reports
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Brand { get; set; }
 
         public Category Category { get; set; }
