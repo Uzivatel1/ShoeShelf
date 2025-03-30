@@ -1,4 +1,4 @@
-# ShoesShelf
+# ShoeShelf
 
 Task from the employer:
 
@@ -17,7 +17,7 @@ Record shoe types and specific pairs of shoes of each type, including their size
 The application should provide input for purchasing new shoes as replacements for damaged ones (how many shoes, which sizes, and types).
 The application will evaluate which shoe types are the most popular and suggest purchasing those, considering the purchase price as well.
 
-# ShoesShelf - Project Details
+# ShoeShelf - Project Details
 
 Analytical solution design: A relational database model for managing a shoe inventory in a bowling alley. The application has several tables with foreign and primary keys and is populated with data. The SHOES tab demonstrates data filtering. The tabs support sorting and pagination. The application is designed in English. Analytical capabilities of the program are available in the Reports tab:
 
@@ -32,7 +32,7 @@ The application includes an authentication system. **Adding, modifying, and dele
 The HTML design is interactive and uses Bootstrap libraries.
 
 
-# ShoesShelf
+# ShoeShelf
 
 Zadání od zaměstnavatele:
 
@@ -49,7 +49,7 @@ Navrhněte relační databázový model pro aplikaci pro správu velkého botní
 
 Evidence typů bot i konkrétních párů bot určitého typu, jejich velikostí, datum zařazení do botníku, pořizovací cena, celkový počet vypůjčení pro daný pár, termín poslední dezinfekce, druh a závažnost poškození a zda je daný pár bot aktuálně zapůjčený nebo ne. Aplikace bude poskytovat podklad pro nákup nových bot jako náhrady za poškozené (kolik bot, jaké velikosti a typy). Aplikace bude vyhodnocovat, které typy bot jsou nejoblíbenější a navrhovat k zakoupení především takové typy, ovšem parametricky i s ohledem na pořizovací cenu.
 
-# ShoesShelf - projekt dle zadání
+# ShoeShelf - projekt dle zadání
 
 Analytický návrh řešení: relační databázový model pro správu botníku v bowlingové herně. Aplikace má několik tabulek s cizími i vlastními klíči, je naplněna daty. Na záložce SHOES je předvedeno filtrování dat. Záložky mají řazení a stránkování. Aplikace je navržena v angličtině. Analytické schopnosti programu jsou na záložce Reports:
 
