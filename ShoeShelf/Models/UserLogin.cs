@@ -6,7 +6,7 @@ namespace ShoeShelf.Models
     {
         [Required(ErrorMessage = "Enter user name")]
         [Display(Name = "User name")]
-        public string Login { get; set; } = "";
+        public string UserName { get; set; } = "";
 
         [Required(ErrorMessage = "Enter password")]
         [DataType(DataType.Password)]
@@ -14,6 +14,6 @@ namespace ShoeShelf.Models
         public string Password { get; set; } = "";
 
         [Display(Name = "Remember me")]
-        public bool RememberMe { get; set; }
+        public bool IsPersistent { get; set; }
     }
 }

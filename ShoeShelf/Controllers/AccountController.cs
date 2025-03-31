@@ -30,7 +30,7 @@ namespace ShoeShelf.Controllers
                 return Redirect(returnUrl); // Přesměrování na původní stránku
             }
             // Pokud není URL platná, přesměruje na výchozí Welcome stránku
-            return RedirectToAction(nameof(ShoesController.Index), "Shoes");
+            return RedirectToAction(nameof(ReportsController.Index), "Reports");
         }
 
         // GET akce pro zobrazení přihlašovacího formuláře
@@ -43,7 +43,7 @@ namespace ShoeShelf.Controllers
         // POST akce pro zpracování přihlášení
         [HttpPost]
         [ValidateAntiForgeryToken] // Chrání proti CSRF útokům
-        public async Task<IActionResult> Login(UserLogin model, string? returnUrl = null)
+        public async Task<IActionResult> Login(UserLogin model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl; // Ukládá návratovou URL do ViewData
 
@@ -51,7 +51,7 @@ namespace ShoeShelf.Controllers
             {
                 // Pokus o přihlášení uživatele s poskytnutými přihlašovacími údaji
                 Microsoft.AspNetCore.Identity.SignInResult result =
-                    await signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
+                    await signInManager.PasswordSignInAsync(model.UserName, model.Password, model.IsPersistent, false);
 
                 if (result.Succeeded) // Pokud je přihlášení úspěšné
                     return RedirectToLocal(returnUrl); // Přesměrování na původní stránku
@@ -66,7 +66,7 @@ namespace ShoeShelf.Controllers
         }
 
         // GET akce pro zobrazení registračního formuláře
-        public IActionResult Register(string? returnUrl = null)
+        public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl; // Ukládá návratovou URL do ViewData
             return View(); // Vrátí pohled s registračním formulářem
@@ -75,14 +75,14 @@ namespace ShoeShelf.Controllers
         // POST akce pro zpracování registrace nového uživatele
         [HttpPost]
         [ValidateAntiForgeryToken] // Chrání proti CSRF útokům
-        public async Task<IActionResult> Register(UserRegistration model, string? returnUrl = null)
+        public async Task<IActionResult> Register(UserRegistration model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl; // Ukládá návratovou URL do ViewData
 
             if (ModelState.IsValid) // Kontrola validity modelu
             {
                 // Vytvoření nového uživatele s uživatelským jménem a heslem
-                IdentityUser user = new IdentityUser { UserName = model.Login };
+                IdentityUser user = new() { UserName = model.UserName };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded) // Pokud je registrace úspěšná
