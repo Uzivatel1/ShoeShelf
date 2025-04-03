@@ -89,8 +89,8 @@ namespace ShoeShelf.Controllers
         // GET: Defects/Create - Renders form to create a new defect
         public IActionResult Create()
         {
-            ViewData["ShoeId"] = new SelectList(_context.Shoe, "Id", "FullDefinition");
-            ViewBag.Descriptions = new Defect().Descriptions;            
+            ViewBag.ShoeId = new SelectList(_context.Shoe, "Id", "FullDefinition");
+            ViewData["Descriptions"] = new Defect().Descriptions;            
             return View();
         }
 
