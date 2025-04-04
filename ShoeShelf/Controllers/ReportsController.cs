@@ -56,20 +56,20 @@ namespace ShoeShelf.Controllers
         public async Task<ActionResult> DisinfectionReport(int? pageNumber, string sortOrder)
         {
             IQueryable<Reports> data =
-                (from s in _context.Shoe
-                 join d in _context.Disinfection on s.Id equals d.ShoeId into disinfectionGroup
-                 from d in disinfectionGroup.DefaultIfEmpty()
+                (from shoes in _context.Shoe
+                 join disinfections in _context.Disinfection on shoes.Id equals disinfections.ShoeId into disinfected
+                 from d in disinfected.DefaultIfEmpty()
                  select new Reports()
                  {
-                     Id = s.Id,
-                     Brand = s.Brand,
-                     Category = s.Category,
-                     Size = s.Size,
-                     InclusionDate = s.InclusionDate,
-                     DisinfectionDate = (from d2 in _context.Disinfection
-                                         where d2.ShoeId == s.Id
-                                         orderby d2.DisinfectionDate descending
-                                         select d2.DisinfectionDate).FirstOrDefault()
+                     Id = shoes.Id,
+                     Brand = shoes.Brand,
+                     Category = shoes.Category,
+                     Size = shoes.Size,
+                     InclusionDate = shoes.InclusionDate,
+                     DisinfectionDate = (from disinfected in _context.Disinfection
+                                         where disinfected.ShoeId == shoes.Id
+                                         orderby disinfected.DisinfectionDate descending
+                                         select disinfected.DisinfectionDate).FirstOrDefault()
                  }).AsNoTracking().Distinct().OrderBy(x => x.DisinfectionDate);
 
             ViewData["CurrentSort"] = sortOrder;
@@ -106,11 +106,10 @@ namespace ShoeShelf.Controllers
         public async Task<ActionResult> RentalReport(int? pageNumber, string sortOrder)
         {
             IQueryable<Reports> data =
-                from rental in _context.Rental
-                join shoe in _context.Shoe on rental.ShoeId equals shoe.Id into shoeGroup
-                from shoe in shoeGroup.DefaultIfEmpty()
-                group new { rental, shoe } by new { shoe.Brand, shoe.Category, shoe.Size, shoe.Price } into g
-                orderby g.Count() descending, g.Key.Price
+                from rentals in _context.Rental
+                join shoes in _context.Shoe on rentals.ShoeId equals shoes.Id into rentedShoes
+                from shoes in rentedShoes.DefaultIfEmpty()
+                group new { rentals, shoes } by new { shoes.Brand, shoes.Category, shoes.Size, shoes.Price } into g
                 select new Reports()
                 {
                     Brand = g.Key.Brand,
@@ -151,10 +150,10 @@ namespace ShoeShelf.Controllers
         public async Task<ActionResult> SubstitutionReport(int? pageNumber, string sortOrder)
         {
             IQueryable<Reports> data =
-                from shoe in _context.Shoe
-                join defect in _context.Defect on shoe.Id equals defect.ShoeId into shoeDefects
-                from sd in shoeDefects.DefaultIfEmpty()
-                where sd.Severity == (Severity)2
+                from defect in _context.Defect
+                join shoe in _context.Shoe on defect.ShoeId equals shoe.Id into defectedShoes
+                from shoe in defectedShoes.DefaultIfEmpty()
+                where defect.Severity == (Severity)2
                 group new { shoe.Id, shoe.Brand, shoe.Category, shoe.Size } by new { shoe.Brand, shoe.Category, shoe.Size } into g
                 select new Reports()
                 {
