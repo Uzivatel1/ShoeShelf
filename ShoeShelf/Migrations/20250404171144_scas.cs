@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoeShelf.Migrations
 {
-    public partial class wdhwkhd : Migration
+    public partial class scas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

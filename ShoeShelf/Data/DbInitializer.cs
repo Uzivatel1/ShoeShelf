@@ -59,8 +59,8 @@ namespace ShoeShelf.Data
                 };
 
                 var randomMonth = random.Next(1, 13);
-                var randomDay = random.Next(1, DateTime.DaysInMonth(2023, randomMonth) + 1);
-                var inclusionDate = new DateTime(2023, randomMonth, randomDay);
+                var randomDay = random.Next(1, DateTime.DaysInMonth(DateTime.Now.Year - 1, randomMonth) + 1);
+                var inclusionDate = new DateTime(DateTime.Now.Year - 1, randomMonth, randomDay);
 
                 bool rented = random.NextDouble() > 0.5;
 
@@ -95,8 +95,8 @@ namespace ShoeShelf.Data
 
             foreach (var shoe in shoes)
             {
-                // Assign defects to 90% of the shoes
-                if (random.NextDouble() < 0.9)
+                // Assign defects to 50% of the shoes
+                if (random.NextDouble() < 0.5)
                 {
                     var defectCount = random.Next(1, 4); // 1 to 3 defects per shoe
                     for (int j = 0; j < defectCount; j++)
@@ -110,34 +110,34 @@ namespace ShoeShelf.Data
                     }
                 }
 
-                // Assign random rental dates in 2023 to 90% of shoes
+                // Assign random rental dates in the last year to 90% of shoes
                 if (random.NextDouble() < 0.9)
                 {
                     var rentalCount = random.Next(1, 4); // 1 to 3 rentals per shoe
                     for (int k = 0; k < rentalCount; k++)
                     {
                         var rentalMonth = random.Next(1, 13);
-                        var rentalDay = random.Next(1, DateTime.DaysInMonth(2023, rentalMonth) + 1);
+                        var rentalDay = random.Next(1, DateTime.DaysInMonth(DateTime.Now.Year - 1, rentalMonth) + 1);
                         rentals.Add(new Rental
                         {
                             Shoe = shoe,
-                            RentalDate = new DateTime(2023, rentalMonth, rentalDay)
+                            RentalDate = new DateTime(DateTime.Now.Year - 1, rentalMonth, rentalDay)
                         });
                     }
                 }
 
-                // Assign random disinfection dates in 2023 to 90% of shoes
+                // Assign random disinfection dates in the last year to 90% of shoes
                 if (random.NextDouble() < 0.9)
                 {
                     var disinfectionCount = random.Next(1, 4); // 1 to 3 disinfections per shoe
                     for (int l = 0; l < disinfectionCount; l++)
                     {
                         var disinfectionMonth = random.Next(1, 13);
-                        var disinfectionDay = random.Next(1, DateTime.DaysInMonth(2023, disinfectionMonth) + 1);
+                        var disinfectionDay = random.Next(1, DateTime.DaysInMonth(DateTime.Now.Year - 1, disinfectionMonth) + 1);
                         disinfections.Add(new Disinfection
                         {
                             Shoe = shoe,
-                            DisinfectionDate = new DateTime(2023, disinfectionMonth, disinfectionDay)
+                            DisinfectionDate = new DateTime(DateTime.Now.Year - 1, disinfectionMonth, disinfectionDay)
                         });
                     }
                 }

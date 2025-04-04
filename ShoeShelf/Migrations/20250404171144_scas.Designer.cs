@@ -12,8 +12,8 @@ using ShoeShelf.Data;
 namespace ShoeShelf.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250330210943_wdhwkhd")]
-    partial class wdhwkhd
+    [Migration("20250404171144_scas")]
+    partial class scas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
